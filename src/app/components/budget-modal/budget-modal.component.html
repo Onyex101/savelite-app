@@ -1,0 +1,10 @@
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>New budget</mat-label>
+    <input matInput type="number" inputmode="numeric" [(ngModel)]="data.budget">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeMe()">No</button>
+  <button mat-button [mat-dialog-close]="data.budget" cdkFocusInitial>Yes</button>
+</div>

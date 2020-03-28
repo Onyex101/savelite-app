@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="mode()">
+        <ion-icon slot="icon-only" name="caret-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div class="box" (click)="openDialog()">
+          <img src="assets/images/bag.svg">
+          <h2>Budget</h2>
+          <ion-label>{{budget | currency: "NGN":"symbol":'3.0'}}</ion-label>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <div class="box2">
+          <div class="title">Expenses</div>
+          <div class="body">{{expense | currency: 'NGN':'symbol':'3.0'}}</div>
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <div class="box2">
+          <div class="title">Balance</div>
+          <div class="body">{{balance | currency: 'NGN':'symbol':'3.0'}}</div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div *ngIf="anyExpense">
+    <!-- <app-doughnut-chart></app-doughnut-chart> -->
+    <app-bar-chart></app-bar-chart>
+    <!-- <app-pie-chart></app-pie-chart> -->
+    <div class="list">
+      <ion-label>Latest Spending</ion-label>
+
+      <ion-list>
+        <ion-item-sliding *ngFor="let expense of expenseList">
+          <ion-item lines="none" (click)="editExpense(expense)">
+            <ion-icon [name]="expense.icon" slot="start"></ion-icon>
+            <ion-label>
+              <h2>{{expense.category}}</h2>
+              <p>{{expense.descr}}</p>
+            </ion-label>
+            {{expense.amount}}
+          </ion-item>
+
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="delExp(expense.id)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+            <ion-item-option (click)="editExpense(expense)">
+              <ion-icon slot="icon-only" name="pencil"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </div>
+  </div>
+
+  <div *ngIf="!anyExpense">
+    <img src="assets/images/exp.svg">
+    <div style="width: 100%; text-align: center;">
+      <ion-button (click)="openExpense()">Add Expense</ion-button>
+    </div>
+  </div>
+</ion-content>

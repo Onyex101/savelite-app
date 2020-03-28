@@ -1,0 +1,39 @@
+ion-content {
+    .header {
+        padding: 8px 0;
+        margin-bottom: 8px;
+
+        .button {
+            width: fit-content;
+            padding: 4px;
+            border-radius: 10px;
+
+            ion-icon {
+                font-size: 36px;
+            }
+        }
+
+        .ripple-parent {
+            position: relative;
+            overflow: hidden;
+        }
+    }
+    form ion-item {
+        --background: transparent;
+        margin-top: 10px;
+        border-radius: 10px;
+        box-shadow: inset 8px 8px 8px #b5afaf,
+            inset -8px -8px 8px #ffffff;
+    }
+
+    .field {
+        margin-bottom: 16px;
+    }
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+}

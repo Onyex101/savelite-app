@@ -1,0 +1,69 @@
+<ion-content class="ion-padding">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <img src="assets/images/wallet.svg">
+  <div class="text">View/Edit Expense</div>
+
+  <form [formGroup]="editExpenseForm" (ngSubmit)="onSubmit(editExpenseForm.value)">
+    <ion-item>
+      <ion-label position="floating">Date</ion-label>
+      <!-- <ion-input type="text" formControlName="date"></ion-input> -->
+      <ion-datetime displayFormat="D MMM YYYY H:mm" min="2020" max="2022" formControlName="date"></ion-datetime>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of errorMessage.date">
+        <div class="error-message"
+          *ngIf="editExpenseForm.get('date').hasError(validation.type) && (editExpenseForm.get('date').dirty || editExpenseForm.get('date').touched)">
+          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Amount</ion-label>
+      <ion-input type="number" inputmode="numeric" placeholder="N" formControlName="amount"></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of errorMessage.amount">
+        <div class="error-message"
+          *ngIf="editExpenseForm.get('amount').hasError(validation.type) && (editExpenseForm.get('amount').dirty || editExpenseForm.get('amount').touched)">
+          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Category</ion-label>
+      <ion-select formControlName="category" cancelText="Cancel" okText="OK">
+        <ion-select-option *ngFor="let cat of categories" [value]="cat">{{cat}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-input type="text" formControlName="descr"></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of errorMessage.descr">
+        <div class="error-message"
+          *ngIf="editExpenseForm.get('descr').hasError(validation.type) && (editExpenseForm.get('descr').dirty || editExpenseForm.get('descr').touched)">
+          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Remarks</ion-label>
+      <ion-input type="text" formControlName="remark"></ion-input>
+    </ion-item>
+
+    <ion-button color="primary" class="ion-margin-top" expand="full" type="submit" [disabled]="!editExpenseForm.valid">
+      Update</ion-button>
+  </form>
+</ion-content>

@@ -1,0 +1,47 @@
+<ion-content>
+  <div class="content">
+    <img src="assets/images/logo2.png">
+    <div>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <ion-item lines="full">
+          <ion-label position="floating">Username</ion-label>
+          <ion-input type="text" formControlName="username"></ion-input>
+        </ion-item>
+        <!-- Error messages -->
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.username">
+            <div class="error-message"
+              *ngIf="loginForm.get('username').hasError(validation.type) && (loginForm.get('username').dirty || loginForm.get('username').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Password</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <!-- Error messages -->
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.password">
+            <div class="error-message"
+              *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+
+        <ion-button class="ion-text-capitalize ion-margin-top" expand="block" type="submit"
+          [disabled]="!loginForm.valid">Login
+        </ion-button>
+      </form>
+      <div style="margin-top: 16px; width: 100%;">
+        <ion-button class="ion-float-right ion-text-capitalize" fill="clear" (click)="openDialog()">forgot password?</ion-button>
+      </div>
+    </div>
+    <div style="margin-top: 8px; width: 100%;" class="footer">
+      <ion-button (click)="register()" class="ion-float-right ion-text-capitalize" fill="clear">New User? Sign Up
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

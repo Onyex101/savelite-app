@@ -1,0 +1,33 @@
+ion-content {
+    img{
+        position: absolute;
+        top: 140px;
+        right: 0;
+        z-index: 1;
+    }
+
+    .text {
+        width: 100%;
+        font-size: 24px;
+        margin-top: 12px;
+        margin-bottom: 24px;
+        z-index: 10;
+    }
+
+    form ion-item {
+        margin-top: 24px;
+        border-radius: 10px;
+        --background: #e1f3f3;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+    ion-button {
+        margin-top: 24px;
+    }
+}

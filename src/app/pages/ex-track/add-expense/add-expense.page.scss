@@ -1,0 +1,54 @@
+ion-content {
+
+    img{
+        position: absolute;
+        top: 70px;
+        right: 0;
+        z-index: 1;
+    }
+    .header {
+        padding: 16px 0;
+        margin-bottom: 8px;
+
+        .button {
+            width: fit-content;
+            background: #e1f3f3;
+            padding: 4px;
+            border-radius: 10px;
+
+            ion-icon {
+                font-size: 36px;
+            }
+        }
+
+        .ripple-parent {
+            position: relative;
+            overflow: hidden;
+        }
+    }
+
+    .text {
+        width: 100%;
+        font-size: 32px;
+        margin-top: 24px;
+        margin-bottom: 36px;
+        z-index: 10;
+    }
+
+    form ion-item {
+        margin-top: 32px;
+        border-radius: 10px;
+        --background: #e1f3f3;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+    ion-button {
+        margin-top: 32px;
+    }
+}

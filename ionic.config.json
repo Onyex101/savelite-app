@@ -1,5 +1,7 @@
 {
   "name": "savelite",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
