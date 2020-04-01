@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Camera, PictureSourceType } from '@ionic-native/camera/ngx';
-import { ActionSheetController } from '@ionic/angular';
-import { LoadingController } from '@ionic/angular';
-import { OCR, OCRSourceType, OCRResult } from '@ionic-native/ocr/ngx';
+import { ActionSheetController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-ocr',
@@ -17,7 +15,6 @@ export class OcrPage implements OnInit {
     private camera: Camera,
     public actionSheetCtrl: ActionSheetController,
     public loadingController: LoadingController,
-    private ocr: OCR
   ) { }
 
   ngOnInit() {
@@ -58,9 +55,4 @@ export class OcrPage implements OnInit {
     });
   }
 
-  async recognizeImage() {
-    this.ocr.recText(OCRSourceType.BASE64, this.selectedImage)
-      .then((res: OCRResult) => console.log(JSON.stringify(res)))
-      .catch((error: any) => console.error(error));
-  }
 }

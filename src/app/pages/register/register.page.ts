@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PasswordValidator, PhoneValidator, CountryPhone } from './../validation';
+import { ActionSheetController, LoadingController } from '@ionic/angular';
+import { Camera, PictureSourceType } from '@ionic-native/camera/ngx';
+import { AuthService } from './../../services/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -10,9 +13,7 @@ import { PasswordValidator, PhoneValidator, CountryPhone } from './../validation
 })
 export class RegisterPage implements OnInit {
 
-  isLinear = true;
-  hide = true;
-  hide2 = true;
+  selectedImage: string;
   regForm: FormGroup;
   countryPhoneGroup: FormGroup;
   matchingPassGroup: FormGroup;
@@ -55,8 +56,14 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    public actionSheetCtrl: ActionSheetController,
+    public loadingController: LoadingController,
+    private camera: Camera,
+    private auth: AuthService
+  ) {
+    this.selectedImage = 'assets/images/avatar.svg';
+  }
 
   ngOnInit() {
     this.countries = [
@@ -105,6 +112,53 @@ export class RegisterPage implements OnInit {
       country_phone: this.countryPhoneGroup,
       matching_passwords: this.matchingPassGroup,
       terms: [false, Validators.pattern('true')]
+    });
+  }
+
+  async selectSource() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      buttons: [
+        {
+          text: 'Use Library',
+          icon: 'image-outline',
+          handler: () => {
+            this.getPicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        }, {
+          text: 'Capture Image',
+          icon: 'camera-outline',
+          handler: () => {
+            this.getPicture(this.camera.PictureSourceType.CAMERA);
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+  getPicture(sourceType: PictureSourceType) {
+    this.camera.getPicture({
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType,
+      allowEdit: true,
+      saveToPhotoAlbum: false,
+      correctOrientation: true
+    }).then((imageData) => {
+      this.selectedImage = `data:image/jpeg;base64,${imageData}`;
+      this.uploadImage(this.selectedImage);
+    });
+  }
+
+  uploadImage(image: string) {
+    this.auth.sendToImgur(image).then((res) => {
+      console.log(res);
+      // this.regForm.value.profileImage = res;
+    }).catch((e) => {
+      console.log(e);
     });
   }
 

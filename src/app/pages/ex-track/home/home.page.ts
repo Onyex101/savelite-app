@@ -123,10 +123,6 @@ export class HomePage implements OnInit {
     return await modal.present();
   }
 
-  mode() {
-    this.router.navigateByUrl('/mode');
-  }
-
   logout() {
     this.router.navigateByUrl('/login');
   }

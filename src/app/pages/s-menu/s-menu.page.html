@@ -3,10 +3,22 @@
     <ion-content>
       <div class="container">
         <div class="header">
-          <ion-avatar>
-            <img src="assets/images/avatar.png">
-          </ion-avatar>
-          <ion-label>User name</ion-label>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="4">
+                <div class="box">
+                  <ion-avatar>
+                    <img src="assets/images/avatar1.png">
+                  </ion-avatar>
+                </div>
+              </ion-col>
+              <ion-col size="8">
+                <div class="box" style="margin-left: 4px;">
+                  <ion-label>User name</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </div>
       </div>
       <ion-menu-toggle auto-hide="false" *ngFor="let page of pages">
@@ -18,13 +30,7 @@
           </ion-label>
         </ion-item>
       </ion-menu-toggle>
-      <ion-item lines="none" class="ion-text-center">
-        <ion-icon name="close-circle" slot="start"></ion-icon>
-        <ion-label>
-          Mode
-        </ion-label>
-      </ion-item>
-      <ion-item lines="none" class="ion-text-center">
+      <ion-item lines="none" class="ion-text-center" (click)="logout()">
         <ion-icon name="power" slot="start"></ion-icon>
         <ion-label>
           Log out

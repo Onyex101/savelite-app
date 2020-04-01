@@ -18,6 +18,7 @@ export class TabsPage implements OnInit {
     this.tabs = [
       {tab: 'home', icon: 'home', name: 'Home'},
       {tab: 'add-expense', icon: 'wallet', name: 'Add Expense'},
+      {tab: 'gallery', icon: 'image', name: 'Gallery'},
       {tab: 'ocr', icon: 'camera', name: 'OCR'},
     ];
   }

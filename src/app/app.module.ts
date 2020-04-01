@@ -18,7 +18,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera/ngx';
-import { OCR } from '@ionic-native/ocr/ngx';
 import { DataService } from './services/data/data.service';
 
 @NgModule({
@@ -38,7 +37,6 @@ import { DataService } from './services/data/data.service';
     SplashScreen,
     ExpenseService,
     Camera,
-    OCR,
     DataService,
     ApiService,
     AuthService,

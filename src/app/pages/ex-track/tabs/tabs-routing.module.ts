@@ -17,14 +17,18 @@ const routes: Routes = [
         loadChildren: () => import('./../add-expense/add-expense.module').then(m => m.AddExpensePageModule)
       },
       {
+        path: 'gallery',
+        loadChildren: () => import('./../gallery/gallery.module').then(m => m.GalleryPageModule)
+      },
+      {
         path: 'ocr',
-        loadChildren: () => import('./../ocr/ocr.module').then( m => m.OcrPageModule)
+        loadChildren: () => import('./../ocr/ocr.module').then(m => m.OcrPageModule)
       },
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tabs/home'
+    redirectTo: 's-menu/s-menu/tabs/tabs/home'
   }
 ];
 

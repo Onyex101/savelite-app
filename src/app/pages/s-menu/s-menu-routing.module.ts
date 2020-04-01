@@ -9,26 +9,18 @@ const routes: Routes = [
     component: SMenuPage,
     children: [
       {
-        path: 'dash',
-        loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardPageModule)
+        path: 'tabs',
+        loadChildren: () => import('../ex-track/tabs/tabs.module').then(m => m.TabsPageModule)
       },
       {
-        path: 'plans',
-        loadChildren: () => import('./plans/plans.module').then( m => m.PlansPageModule)
-      },
-      {
-        path: 'new-budget',
-        loadChildren: () => import('./new-budget/new-budget.module').then( m => m.NewBudgetPageModule)
-      },
-      {
-        path: 'plan',
-        loadChildren: () => import('./plan/plan.module').then( m => m.PlanPageModule)
+        path: 'savings',
+        loadChildren: () => import('./savings/savings.module').then( m => m.SavingsPageModule)
       }
     ]
   },
   {
     path: '',
-    redirectTo: 's-menu/dash'
+    redirectTo: 's-menu/tabs/tabs/home'
   }
 ];
 
@@ -38,4 +30,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class SMenuPageRoutingModule {}
+export class SMenuPageRoutingModule { }

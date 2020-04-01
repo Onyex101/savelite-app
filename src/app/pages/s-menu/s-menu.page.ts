@@ -10,36 +10,34 @@ export class SMenuPage implements OnInit {
   activePath = '';
   pages = [
     {
-      name: 'Dash',
+      name: 'Home',
       icon: 'home',
-      path: '/s-menu/s-menu/dash'
+      path: '/s-menu/s-menu/tabs/tabs/home'
     },
     {
-      name: 'New Budget',
+      name: 'Savings',
       icon: 'wallet',
-      path: '/s-menu/s-menu/new-budget'
+      path: '/s-menu/s-menu/savings'
     },
-    {
-      name: 'All Plans',
-      icon: 'albums',
-      path: '/s-menu/s-menu/plans'
-    },
-    {
-      name: 'Plan',
-      icon: 'reader',
-      path: '/s-menu/s-menu/plan'
-    }
   ];
 
   constructor(
     private router: Router
   ) {
     this.router.events.subscribe((event: RouterEvent) => {
-      this.activePath = event.url;
+      if (event.url === '/s-menu') {
+        event.url = '/s-menu/s-menu/tabs/tabs/home';
+        this.activePath = event.url;
+      } else {
+        this.activePath = event.url;
+      }
     });
   }
 
   ngOnInit() {
   }
 
+  logout(): void {
+    this.router.navigateByUrl('/login');
+  }
 }

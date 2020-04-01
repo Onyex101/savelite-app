@@ -1,5 +1,6 @@
 
 https://www.matellio.com/blog/develop-budget-tracking-app/
 
-https://hackaday.io/project/162180/instructions
+https://www.linkedin.com/pulse/building-face-recognition-app-ionic-using-imgur-azure-krivonos
 
+https://apidocs.imgur.com/?version=latest#c85c9dfc-7487-4de2-9ecd-66f727cf3139

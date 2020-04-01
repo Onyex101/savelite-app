@@ -1,16 +1,25 @@
-import { MaterialModule } from './../material.module';
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MaterialModule } from './../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// Components
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { BudgetModalComponent } from './budget-modal/budget-modal.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { DoughnutChartComponent } from './doughnut-chart/doughnut-chart.component';
 import { DetailsComponent } from './details/details.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { NewPlanComponent } from './new-plan/new-plan.component';
+import { NewCardComponent } from './new-card/new-card.component';
+import { PlanDetailComponent } from './plan-detail/plan-detail.component';
+
+// plugins
 import 'chartjs-plugin-zoom';
 import { ChartsModule } from 'ng2-charts';
+
+// Providers/Service
 import { DataService } from './../services/data/data.service';
 
 @NgModule({
@@ -20,7 +29,10 @@ import { DataService } from './../services/data/data.service';
     DoughnutChartComponent,
     PieChartComponent,
     DetailsComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    NewCardComponent,
+    NewPlanComponent,
+    PlanDetailComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +48,10 @@ import { DataService } from './../services/data/data.service';
     DoughnutChartComponent,
     PieChartComponent,
     DetailsComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    NewCardComponent,
+    NewPlanComponent,
+    PlanDetailComponent
   ],
   providers: [DataService]
 })

@@ -52,7 +52,8 @@ export class LoginPage implements OnInit {
       console.log('Please provide all the required values!');
     } else {
       console.log(this.loginForm.value);
-      this.router.navigateByUrl('/mode');
+      // this.router.navigateByUrl('/mode');
+      this.router.navigateByUrl('/s-menu');
     }
   }
 

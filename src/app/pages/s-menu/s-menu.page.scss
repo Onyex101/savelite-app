@@ -1,41 +1,60 @@
-.active-menu {
-    border-left: 10px solid var(--ion-color-danger);
-}
-.container {
-    width: 100%;
-    height: 180px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .header {
-        width: 95%;
-        height: 170px;
+ion-content {
+    --background: #e1f3f3;
+
+    .active-menu {
+        //border-left: 10px solid var(--ion-color-danger);
+        background: linear-gradient(145deg, #f1ffff, #cbdbdb);
+        box-shadow: inset 8px 8px 16px #9eaaaa, 
+                inset -8px -8px 16px #ffffff;
+    }
+
+    .container {
+        width: 100%;
+        height: 160px;
         display: flex;
+        justify-content: center;
         align-items: center;
-        flex-direction: column;
-        box-shadow: inset 8px 8px 8px #b5afaf, 
-                inset -8px -8px 8px #ffffff;
-        ion-avatar {
-            width: 80px;
-            height: 80px;
-            margin-top: 30px;
-            box-shadow: 8px 8px 8px #b5afaf,
-                        -8px -8px 8px #ffffff;
-        }
-        ion-label {
-            margin-top: 15px;
-            padding: 5px;
-            background: linear-gradient(145deg, #ddd5d5, #fffefe);
-            box-shadow:  8px 8px 8px #b5afaf, 
-                 -8px -8px 8px #ffffff;
-            border-radius: 2px;
+
+        .header {
+            width: 95%;
+            height: 170px;
+            display: flex;
+            align-items: center;
+
+            // box-shadow: inset 8px 8px 8px #b5afaf, 
+            //         inset -8px -8px 8px #ffffff;
+            .box {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
+
+            ion-avatar {
+                width: 80px;
+                height: 80px;
+                margin-top: 30px;
+                background: #e1f3f3;
+                box-shadow: 12px 12px 24px #9eaaaa,
+                    -12px -12px 24px #ffffff;
+            }
+
+            ion-label {
+                padding: 8px;
+                background: linear-gradient(145deg, #f1ffff, #cbdbdb);
+                box-shadow: 12px 12px 24px #9eaaaa,
+                    -12px -12px 24px #ffffff;
+                border-radius: 2px;
+            }
         }
     }
-}
 
-ion-item {
-    margin: 10px 10px 20px 10px;
-    --background: linear-gradient(145deg, #ddd5d5, #fffefe);
-    box-shadow: 8px 8px 8px #b5afaf,
-        -8px -8px 8px #ffffff;
+    ion-item {
+        width: 95%;
+        margin: 28px 0;
+        padding: 8px;
+        --background: linear-gradient(145deg, #f1ffff, #cbdbdb);
+        box-shadow: 8px 8px 16px #9eaaaa,
+            -8px -8px 16px #ffffff;
+    }
 }
