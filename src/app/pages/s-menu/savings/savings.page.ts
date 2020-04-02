@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { NewPlanComponent } from './../../../components/new-plan/new-plan.component';
 
 @Component({
   selector: 'app-savings',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SavingsPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public modalController: ModalController
+  ) { }
 
   ngOnInit() {
   }
 
+  async newPlan() {
+    const modal = await this.modalController.create({
+      component: NewPlanComponent,
+      backdropDismiss: false,
+      swipeToClose: false
+    });
+    return await modal.present();
+  }
 }

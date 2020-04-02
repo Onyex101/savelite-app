@@ -12,7 +12,6 @@ import { DoughnutChartComponent } from './doughnut-chart/doughnut-chart.componen
 import { DetailsComponent } from './details/details.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { NewPlanComponent } from './new-plan/new-plan.component';
-import { NewCardComponent } from './new-card/new-card.component';
 import { PlanDetailComponent } from './plan-detail/plan-detail.component';
 
 // plugins
@@ -30,7 +29,6 @@ import { DataService } from './../services/data/data.service';
     PieChartComponent,
     DetailsComponent,
     ForgotPasswordComponent,
-    NewCardComponent,
     NewPlanComponent,
     PlanDetailComponent
   ],
@@ -49,7 +47,6 @@ import { DataService } from './../services/data/data.service';
     PieChartComponent,
     DetailsComponent,
     ForgotPasswordComponent,
-    NewCardComponent,
     NewPlanComponent,
     PlanDetailComponent
   ],

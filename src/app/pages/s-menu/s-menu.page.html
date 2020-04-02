@@ -21,21 +21,23 @@
           </ion-grid>
         </div>
       </div>
-      <ion-menu-toggle auto-hide="false" *ngFor="let page of pages">
-        <ion-item [routerLink]="page.path" routerDirection="root" [class.active-menu]="activePath === page.path"
-          lines="none" class="ion-text-center">
-          <ion-icon [name]="page.icon" slot="start"></ion-icon>
+      <div class="ion-padding-horizontal">
+        <ion-menu-toggle auto-hide="false" *ngFor="let page of pages">
+          <ion-item [routerLink]="page.path" routerDirection="root" [class.active-menu]="activePath === page.path"
+            lines="none" class="ion-text-center">
+            <ion-icon [name]="page.icon" slot="start"></ion-icon>
+            <ion-label>
+              {{page.name}}
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-item lines="none" class="ion-text-center" (click)="logout()">
+          <ion-icon name="power" slot="start"></ion-icon>
           <ion-label>
-            {{page.name}}
+            Log out
           </ion-label>
         </ion-item>
-      </ion-menu-toggle>
-      <ion-item lines="none" class="ion-text-center" (click)="logout()">
-        <ion-icon name="power" slot="start"></ion-icon>
-        <ion-label>
-          Log out
-        </ion-label>
-      </ion-item>
+      </div>
     </ion-content>
   </ion-menu>
 

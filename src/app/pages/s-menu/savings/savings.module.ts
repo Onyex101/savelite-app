@@ -8,17 +8,27 @@ import { SavingsPageRoutingModule } from './savings-routing.module';
 
 import { SavingsPage } from './savings.page';
 import { ComponentsModule } from './../../../components/components.module';
-import { PlanDetailComponent } from './../../../components/plan-detail/plan-detail.component';
+import { NewPlanComponent } from './../../../components/new-plan/new-plan.component';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
-  entryComponents: [PlanDetailComponent],
+  entryComponents: [NewPlanComponent],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     SavingsPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    NgCircleProgressModule.forRoot({
+      radius: 100,
+      showSubtitle: false,
+      showInnerStroke: false,
+      responsive: true,
+      outerStrokeWidth: 16,
+      outerStrokeColor: '#d19115',
+      animationDuration: 500,
+    })
   ],
   declarations: [SavingsPage]
 })
-export class SavingsPageModule {}
+export class SavingsPageModule { }

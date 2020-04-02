@@ -7,6 +7,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="7">
+        <div class="text">
+          Total Savings
+        </div>
+      </ion-col>
+      <ion-col size="5" class="ion-text-end">
+        <div class="text">
+          5,000
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="container">
+    <div class="progress">
+      <circle-progress 
+      [radius]="100"
+      [percent]="15"
+      ></circle-progress>
+    </div>
+  </div>
+  <!-- <ion-button color="primary" (click)="newPlan()">Open form</ion-button> -->
 </ion-content>
