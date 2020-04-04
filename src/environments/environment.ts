@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'localhost:3000/',
+  IMGUR_ENDPOINT: 'https://api.imgur.com/3/upload',
+  IMGUR_CLIENT_ID: '924ff8331aaf4c1',
+  whitelistedDomains: [
+    'localhost:3000/',
+  ],
+  blacklistedRoutes: [
+    'https://api.imgur.com/3/upload'
+  ]
 };
 
 /*

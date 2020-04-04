@@ -9,6 +9,7 @@ import { NewPlanComponent } from './../../../components/new-plan/new-plan.compon
 })
 export class SavingsPage implements OnInit {
 
+  plan = false;
   constructor(
     public modalController: ModalController
   ) { }

@@ -23,7 +23,6 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
       radius: 100,
       showSubtitle: false,
       showInnerStroke: false,
-      responsive: true,
       outerStrokeWidth: 16,
       outerStrokeColor: '#d19115',
       animationDuration: 500,

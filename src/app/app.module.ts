@@ -8,7 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthService } from './services/auth/auth.service';
+import { AuthService, TOKEN_KEY } from './services/auth/auth.service';
 import { ApiService } from './services/api/api.service';
 import { MaterialModule } from './material.module';
 import { ExpenseService } from './services/expenses/expense.service';
@@ -18,7 +18,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera/ngx';
+import { environment } from './../environments/environment';
 import { DataService } from './services/data/data.service';
+
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+
+export function jwtOptionsFactory(storage) {
+  return {
+    tokenGetter: () => {
+      return storage.get(TOKEN_KEY);
+    },
+    whitelistedDomains: environment.whitelistedDomains,
+    blacklistedRoutes: environment.blacklistedRoutes
+  };
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +43,14 @@ import { DataService } from './services/data/data.service';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    JwtModule.forRoot({
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
+        deps: [Storage]
+      }
+    })
   ],
   providers: [
     StatusBar,

@@ -5,6 +5,7 @@ import { PasswordValidator, PhoneValidator, CountryPhone } from './../validation
 import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { Camera, PictureSourceType } from '@ionic-native/camera/ngx';
 import { AuthService } from './../../services/auth/auth.service';
+import { ApiService } from './../../services/api/api.service';
 
 @Component({
   selector: 'app-register',
@@ -60,7 +61,8 @@ export class RegisterPage implements OnInit {
     public actionSheetCtrl: ActionSheetController,
     public loadingController: LoadingController,
     private camera: Camera,
-    private auth: AuthService
+    private auth: AuthService,
+    private api: ApiService
   ) {
     this.selectedImage = 'assets/images/avatar.svg';
   }
@@ -154,7 +156,7 @@ export class RegisterPage implements OnInit {
   }
 
   uploadImage(image: string) {
-    this.auth.sendToImgur(image).then((res) => {
+    this.api.sendToImgur(image).then((res) => {
       console.log(res);
       // this.regForm.value.profileImage = res;
     }).catch((e) => {
