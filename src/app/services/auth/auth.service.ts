@@ -1,13 +1,14 @@
-import { DataService } from './../data/data.service';
-import { ILogin, IReg } from './../../interface/dto';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
 import { take, map, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, from } from 'rxjs';
+import { ILogin, IReg } from './../../interface/dto';
 import { environment } from './../../../environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
+const helper = new JwtHelperService();
 export const TOKEN_KEY = 'jwt-token';
 @Injectable({
   providedIn: 'root'
@@ -15,44 +16,38 @@ export const TOKEN_KEY = 'jwt-token';
 export class AuthService {
 
   private url = `${environment.apiUrl}/user`;
-  public user: Observable<any>;
 
   constructor(
     private http: HttpClient,
     private plt: Platform,
     private storage: Storage
-  ) {
-    this.loadStoredToken();
+  ) { }
+
+  async isAuthenticated() {
+    const token = await this.storage.get(TOKEN_KEY);
+    // Check whether the token is expired and return
+    // true or false
+    return !helper.isTokenExpired(token);
   }
 
-  loadStoredToken() {
-    let platformObs = from(this.plt.ready());
-    this.user = platformObs.pipe(
-      switchMap(() => {
-        return from(this.storage.get(TOKEN_KEY));
-      }),
-      map(token => {
-        if (token) {
-          return true;
-        } else {
-          return null;
-        }
-      })
-    );
+  private getHeader() {
+    return new HttpHeaders({
+      'content-type': 'application/json',
+      'Access-Control-Expose-Headers': 'true'
+    });
   }
 
-  login(credentials: ILogin) {
-    return this.http.post(`${this.url}/login`, credentials).pipe(
-      take(1),
-      map(res => {
-        // Extract the JWT
-        return res['token'];
-      }),
-      switchMap(token => {
-        const storageObs = from(this.storage.set(TOKEN_KEY, token));
-        return storageObs;
-      })
-    );
+  login(credentials: ILogin): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.post(`${this.url}/login`, credentials, { headers: this.getHeader(), observe: 'response' }).subscribe((res) => {
+        const token = res.headers.get('Authorization');
+        this.storage.set(TOKEN_KEY, token).then(() => {
+          resolve(res.body);
+        });
+      }, (err) => {
+        reject(err);
+      });
+    });
   }
 
   register(credentials: IReg) {

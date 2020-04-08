@@ -1,3 +1,4 @@
+import { ApiService } from './../../services/api/api.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
@@ -25,7 +26,8 @@ export class NewPlanComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public loadingController: LoadingController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private api: ApiService
   ) {
     this.duration = ['monthly', 'weekly', 'daily'];
   }
@@ -93,11 +95,16 @@ export class NewPlanComponent implements OnInit {
       backdropDismiss: false
     });
     await loading.present();
-    setTimeout(() => {
+    this.planForm.value.card = this.cardForm.value;
+    console.log(this.planForm.value);
+    this.api.createPlan(this.planForm.value).then((res) => {
+      console.log(res);
+      this.planForm.reset();
+      this.cardForm.reset();
       loading.dismiss();
-      this.planForm.value.card = this.cardForm.value;
-      console.log(this.planForm.value);
-    }, 3000);
+    }).catch((e) => {
+      console.log(e);
+    });
   }
 
   next() {

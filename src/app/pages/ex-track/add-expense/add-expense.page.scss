@@ -38,9 +38,14 @@ ion-content {
     form ion-item {
         margin-top: 32px;
         border-radius: 10px;
+        opacity: 0.8;
         --background: #e1f3f3;
+        z-index: 100;
     }
 
+    ion-grid {
+        --ion-grid-padding: 0;
+    }
     .error-message {
         color: red;
         font-size: 14px;
@@ -50,5 +55,6 @@ ion-content {
 
     ion-button {
         margin-top: 32px;
+        z-index: 100;
     }
 }

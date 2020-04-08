@@ -165,7 +165,10 @@ export class RegisterPage implements OnInit {
   }
 
   onSubmit(values?) {
-    console.log(values);
-    this.router.navigateByUrl('/login');
+    this.auth.register(values).then((res) => {
+      console.log(res);
+      this.regForm.reset();
+      this.router.navigateByUrl('/login');
+    }).catch((e) => console.log(e));
   }
 }

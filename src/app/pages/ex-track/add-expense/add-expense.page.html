@@ -22,25 +22,36 @@
       </ng-container>
     </div>
 
-    <ion-item>
-      <ion-label position="floating">Amount</ion-label>
-      <ion-input type="number" inputmode="numeric" placeholder="N" formControlName="amount"></ion-input>
-    </ion-item>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of errorMessage.amount">
-        <div class="error-message"
-          *ngIf="addExpenseForm.get('amount').hasError(validation.type) && (addExpenseForm.get('amount').dirty || addExpenseForm.get('amount').touched)">
-          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
 
-    <ion-item>
-      <ion-label position="floating">Category</ion-label>
-      <ion-select formControlName="category" cancelText="Cancel" okText="OK">
-        <ion-select-option *ngFor="let cat of categories" [value]="cat">{{cat}}</ion-select-option>
-      </ion-select>
-    </ion-item>
+          <ion-item>
+            <ion-label position="floating">Amount</ion-label>
+            <ion-input type="number" inputmode="numeric" placeholder="N" formControlName="amount"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of errorMessage.amount">
+              <div class="error-message"
+                *ngIf="addExpenseForm.get('amount').hasError(validation.type) && (addExpenseForm.get('amount').dirty || addExpenseForm.get('amount').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+
+        </ion-col>
+        <ion-col>
+
+          <ion-item>
+            <ion-label position="floating">Category</ion-label>
+            <ion-select formControlName="category" cancelText="Cancel" okText="OK">
+              <ion-select-option *ngFor="let cat of categories" [value]="cat">{{cat}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
     <ion-item>
       <ion-label position="floating">Description</ion-label>

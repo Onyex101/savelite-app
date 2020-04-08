@@ -113,7 +113,7 @@
           </ng-container>
         </div>
 
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="floating">Expiry Date</ion-label>
           <ion-datetime displayFormat="MM/YY" min="2020" max="2050" formControlName="expiry_date"></ion-datetime>
         </ion-item>
@@ -124,9 +124,55 @@
               <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
             </div>
           </ng-container>
-        </div>
+        </div> -->
 
-        <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Expiry Date</ion-label>
+                <ion-datetime displayFormat="MM/YY" min="2020" max="2050" formControlName="expiry_date"></ion-datetime>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of planError.expiry_date">
+                  <div class="error-message"
+                    *ngIf="cardForm.get('expiry_date').hasError(validation.type) && (cardForm.get('expiry_date').dirty || cardForm.get('expiry_date').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">CVV</ion-label>
+                <ion-input type="number" inputmode="numeric" formControlName="cvv"></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of planError.cvv">
+                  <div class="error-message"
+                    *ngIf="cardForm.get('cvv').hasError(validation.type) && (cardForm.get('cvv').dirty || cardForm.get('cvv').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">PIN</ion-label>
+                <ion-input type="number" inputmode="numeric" formControlName="pin"></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of planError.pin">
+                  <div class="error-message"
+                    *ngIf="cardForm.get('pin').hasError(validation.type) && (cardForm.get('pin').dirty || cardForm.get('pin').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <!-- <ion-item>
           <ion-label position="floating">CVV</ion-label>
           <ion-input type="number" inputmode="numeric" formControlName="cvv"></ion-input>
         </ion-item>
@@ -137,9 +183,9 @@
               <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
             </div>
           </ng-container>
-        </div>
+        </div> -->
 
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="floating">PIN</ion-label>
           <ion-input type="number" inputmode="numeric" formControlName="pin"></ion-input>
         </ion-item>
@@ -150,9 +196,9 @@
               <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
             </div>
           </ng-container>
-        </div>
+        </div> -->
 
-        <ion-button color="primary" class="ion-margin-top" expand="full" type="submit" [disabled]="!cardForm.valid && !planForm.value">Create
+        <ion-button color="primary" class="ion-margin-top" expand="full" type="submit" [disabled]="!cardForm.valid && !planForm.valid">Create
         </ion-button>
       </form>
       </div>

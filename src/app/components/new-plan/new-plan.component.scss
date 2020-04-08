@@ -1,5 +1,9 @@
 ion-content {
 
+    ion-grid {
+        --ion-grid-padding: 0;
+    }
+
     .text {
         width: 100%;
         font-size: 24px;
@@ -12,17 +16,19 @@ ion-content {
         display: flex;
         flex-direction: column;
         width: 100%;
+
         img {
             position: absolute;
             top: 40px;
             right: 0;
         }
     }
+
     form ion-item {
         margin-top: 24px;
         border-radius: 10px;
         --background: #e1f3f3;
-        opacity: 0.6;
+        opacity: 0.8;
         // --background: transparent;
     }
 

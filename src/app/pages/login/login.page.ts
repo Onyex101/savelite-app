@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,7 +14,7 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
   isSubmitted = false;
-  validation_messages = {
+  validationMessages = {
     username: [
       { type: 'required', message: 'Username is required.' },
       { type: 'minlength', message: 'Username must be at least 5 characters long.' },
@@ -27,7 +28,8 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     public dialog: MatDialog,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
@@ -51,9 +53,13 @@ export class LoginPage implements OnInit {
     if (!this.loginForm.valid) {
       console.log('Please provide all the required values!');
     } else {
-      console.log(this.loginForm.value);
-      // this.router.navigateByUrl('/mode');
-      this.router.navigateByUrl('/s-menu');
+      this.auth.login(this.loginForm.value).then((res) => {
+        console.log('login', res);
+        this.loginForm.reset();
+        this.router.navigateByUrl('/s-menu');
+      }).catch((err) => {
+        console.log(err);
+      });
     }
   }
 

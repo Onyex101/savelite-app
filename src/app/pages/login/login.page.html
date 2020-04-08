@@ -9,7 +9,7 @@
         </ion-item>
         <!-- Error messages -->
         <div class="validation-errors">
-          <ng-container *ngFor="let validation of validation_messages.username">
+          <ng-container *ngFor="let validation of validationMessages.username">
             <div class="error-message"
               *ngIf="loginForm.get('username').hasError(validation.type) && (loginForm.get('username').dirty || loginForm.get('username').touched)">
               <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
@@ -23,7 +23,7 @@
         </ion-item>
         <!-- Error messages -->
         <div class="validation-errors">
-          <ng-container *ngFor="let validation of validation_messages.password">
+          <ng-container *ngFor="let validation of validationMessages.password">
             <div class="error-message"
               *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
               <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}

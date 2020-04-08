@@ -16,7 +16,7 @@ import { ExpenseService } from './services/expenses/expense.service';
 // plugins
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IonicStorageModule } from '@ionic/storage';
+import { IonicStorageModule, Storage } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera/ngx';
 import { environment } from './../environments/environment';
 import { DataService } from './services/data/data.service';

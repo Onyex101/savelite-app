@@ -8,42 +8,41 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div *ngIf="!plan">
-    <div class="card" (click)="newPlan()">
-      <h2>It seems you have no plans yet, tap to get started</h2>
+
+  <div class="top">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="7">
+          <div class="text">
+            <p>Total Savings</p>
+            <h2>5,000</h2>
+          </div>
+        </ion-col>
+        <ion-col size="5" class="ion-text-end">
+          <div class="text">
+
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="container">
+    <div class="progress">
+      <circle-progress [percent]="15"></circle-progress>
     </div>
-    <img src="assets/images/finance.svg">
-    <!-- <div style="width: 100%; margin-top: 8px;">
-      <ion-button color="primary" (click)="newPlan()">Open form</ion-button>
-    </div> -->
   </div>
 
-  <div *ngIf="plan">
-    <div class="top">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="7">
-            <div class="text">
-              <p>Total Savings</p>
-              <h2>5,000</h2>
-            </div>
-          </ion-col>
-          <ion-col size="5" class="ion-text-end">
-            <div class="text">
-              
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+  <div *ngIf="!plan" style="width: 100%; margin-top: 8px;" class="ion-text-center">
+    <div class="card" (click)="newPlan()">
+      <h3>It seems you have no plans yet, tap to get started</h3>
     </div>
-    <div class="container">
-      <div class="progress">
-        <circle-progress
-        [percent]="15"
-        ></circle-progress>
-      </div>
-    </div>
-  <div class="items">
+    <img src="assets/images/finance.svg" width="80%" height="80%">
+    <!-- <div style="width: 100%; margin-top: 8px;">
+        <ion-button color="primary" (click)="newPlan()">Open form</ion-button>
+      </div> -->
+  </div>
+
+  <div class="items" *ngIf="plan">
     <ion-item>
       <ion-label>
         <h2>H2 Title Text</h2>
@@ -51,7 +50,7 @@
       </ion-label>
       <ion-button fill="outline" slot="end">View</ion-button>
     </ion-item>
-  
+
     <ion-item>
       <ion-label>
         <h2>H2 Title Text</h2>
@@ -59,7 +58,7 @@
       </ion-label>
       <ion-button fill="outline" slot="end">View</ion-button>
     </ion-item>
-  
+
     <ion-item>
       <ion-label>
         <h2>H2 Title Text</h2>
@@ -67,7 +66,7 @@
       </ion-label>
       <ion-button fill="outline" slot="end">View</ion-button>
     </ion-item>
-  
+
     <ion-item>
       <ion-label>
         <h2>H2 Title Text</h2>
@@ -76,7 +75,6 @@
       <ion-button fill="outline" slot="end">View</ion-button>
     </ion-item>
   </div>
-  </div>
-  
+
   <!-- <ion-button color="primary" (click)="newPlan()">Open form</ion-button> -->
 </ion-content>

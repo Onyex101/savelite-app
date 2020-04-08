@@ -1,11 +1,10 @@
 ion-content {
-    --background: #e1f3f3;
 
     .active-menu {
         //border-left: 10px solid var(--ion-color-danger);
-        background: linear-gradient(145deg, #f1ffff, #cbdbdb);
-        box-shadow: inset 8px 8px 16px #9eaaaa, 
-                inset -8px -8px 16px #ffffff;
+        background: #f4f5f8;
+        box-shadow: inset 8px 8px 16px #cfd0d3,
+            inset -8px -8px 16px #ffffff;
     }
 
     .container {
@@ -34,15 +33,15 @@ ion-content {
                 width: 80px;
                 height: 80px;
                 margin-top: 30px;
-                background: #e1f3f3;
-                box-shadow: 12px 12px 24px #9eaaaa,
+                background: linear-gradient(145deg, #ffffff, #dcdddf);
+                box-shadow: 12px 12px 24px #cfd0d3,
                     -12px -12px 24px #ffffff;
             }
 
             ion-label {
                 padding: 8px;
-                background: linear-gradient(145deg, #f1ffff, #cbdbdb);
-                box-shadow: 12px 12px 24px #9eaaaa,
+                background: linear-gradient(145deg, #ffffff, #dcdddf);
+                box-shadow: 12px 12px 24px #cfd0d3,
                     -12px -12px 24px #ffffff;
                 border-radius: 2px;
             }
@@ -53,8 +52,8 @@ ion-content {
         width: 100%;
         margin: 28px 0;
         padding: 8px;
-        --background: linear-gradient(145deg, #f1ffff, #cbdbdb);
-        box-shadow: 8px 8px 16px #9eaaaa,
+        --background: linear-gradient(145deg, #ffffff, #dcdddf);
+        box-shadow: 8px 8px 16px #cfd0d3,
             -8px -8px 16px #ffffff;
     }
 }
