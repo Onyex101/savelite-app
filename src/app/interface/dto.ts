@@ -27,6 +27,15 @@ export interface IPlan {
         expiry_date: string;
         cvv: string;
         pin: string;
+        amount?: string;
     };
     card_update?: boolean;
+    _id?: string;
+    withdrawalDate?: string;
+    percentage?: string;
 }
+
+export interface IMail {
+    email: string;
+}
+

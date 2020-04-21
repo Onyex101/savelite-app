@@ -1,0 +1,36 @@
+ion-content {
+    ion-toolbar {
+        --background: transparent;
+    }
+
+    ion-grid {
+        --ion-grid-padding: 0;
+    }
+
+    .text {
+        width: 100%;
+        font-size: 24px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        z-index: 10;
+    }
+
+    form ion-item {
+        margin-top: 24px;
+        border-radius: 10px;
+        --background: #e1f3f3;
+        opacity: 0.8;
+        // --background: transparent;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+    ion-button {
+        margin-top: 24px;
+    }
+}

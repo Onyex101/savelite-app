@@ -79,7 +79,7 @@ export class HomePage implements OnInit {
       if (result !== undefined) {
         this.expenseService.setBudget(result);
         this.budget = result;
-        this.router.navigateByUrl('/tabs/tabs/add-expense');
+        this.router.navigateByUrl('/s-menu/s-menu/tabs/tabs/add-expense');
       }
     });
   }

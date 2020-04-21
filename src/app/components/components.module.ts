@@ -38,7 +38,7 @@ import { DataService } from './../services/data/data.service';
     ReactiveFormsModule,
     IonicModule,
     MaterialModule,
-    ChartsModule
+    ChartsModule,
   ],
   exports: [
     BudgetModalComponent,

@@ -1,8 +1,7 @@
 import { ApiService } from './../../services/api/api.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { LoadingController } from '@ionic/angular';
-import { ModalController, IonSlides } from '@ionic/angular';
+import { LoadingController, ModalController, IonSlides, NavParams } from '@ionic/angular';
 import { ViewChild } from '@angular/core';
 import { ErrorMessages } from './../../pages/validation';
 
@@ -27,7 +26,8 @@ export class NewPlanComponent implements OnInit {
     private formBuilder: FormBuilder,
     public loadingController: LoadingController,
     private modalCtrl: ModalController,
-    private api: ApiService
+    private api: ApiService,
+    private navParam: NavParams
   ) {
     this.duration = ['monthly', 'weekly', 'daily'];
   }
@@ -96,19 +96,25 @@ export class NewPlanComponent implements OnInit {
     });
     await loading.present();
     this.planForm.value.card = this.cardForm.value;
-    console.log(this.planForm.value);
+    // console.log(this.planForm.value);
+    // let dateFormat = this.planForm.value.card.expiry_date;
+    // dateFormat = dateFormat.replace('T', ' ');
+    // dateFormat = dateFormat.replace('Z', '');
+    // console.log(dateFormat);
     this.api.createPlan(this.planForm.value).then((res) => {
-      console.log(res);
+      // console.log(res);
       this.planForm.reset();
       this.cardForm.reset();
       loading.dismiss();
+      this.modalCtrl.dismiss();
     }).catch((e) => {
       console.log(e);
+      loading.dismiss();
     });
   }
 
   next() {
-    console.log(this.planForm.value);
+    // console.log(this.planForm.value);
     this.slides.slideNext();
   }
 

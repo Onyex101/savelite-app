@@ -1,9 +1,52 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>gallery</ion-title>
+    <ion-title>Gallery</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <div class="skeleton">
+          <ion-skeleton-text animated style="height: 100%;"></ion-skeleton-text>
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <div class="skeleton">
+          <ion-skeleton-text animated style="height: 100%;"></ion-skeleton-text>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <div class="skeleton">
+          <ion-skeleton-text animated style="height: 100%;"></ion-skeleton-text>
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <div class="skeleton">
+          <ion-skeleton-text animated style="height: 100%;"></ion-skeleton-text>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <div class="skeleton">
+          <ion-skeleton-text animated style="height: 100%;"></ion-skeleton-text>
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <div class="skeleton">
+          <ion-skeleton-text animated style="height: 100%;"></ion-skeleton-text>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="getPicture()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

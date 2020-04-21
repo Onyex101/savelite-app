@@ -1,5 +1,9 @@
 ion-content {
-    img{
+    ion-toolbar {
+        --background: transparent;
+    }
+
+    img {
         position: absolute;
         top: 140px;
         right: 0;
@@ -18,6 +22,8 @@ ion-content {
         margin-top: 24px;
         border-radius: 10px;
         --background: #e1f3f3;
+        opacity: 0.8;
+        z-index: 1000;
     }
 
     .error-message {

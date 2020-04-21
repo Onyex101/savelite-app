@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { IPlan } from './../../interface/dto';
+import { Storage } from '@ionic/storage';
+import { TOKEN_KEY } from './../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +15,32 @@ export class ApiService {
   private imgurEndPoint = environment.IMGUR_ENDPOINT;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private storage: Storage
   ) { }
+
+  /**
+   * create a http header with auth token
+   * @param token auth token gotten from storage
+   */
+  private addHeader(token: string) {
+    return new HttpHeaders({
+      'content-type': 'application/json',
+      'Access-Control-Expose-Headers': 'true',
+      Authorization: token
+    });
+  }
+
+  /**
+   * retrieves Authorization token from storage
+   */
+  private getToken() {
+    return new Promise((resolve, reject) => {
+      this.storage.get(TOKEN_KEY).then((val) => {
+        resolve(val);
+      });
+    });
+  }
 
   /**
    * creates a new plan
@@ -22,12 +48,12 @@ export class ApiService {
    */
   createPlan(data: IPlan): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.post(`${this.url}/plan`, data).subscribe((res) => {
-        console.log(res);
-        resolve(res);
-      }, (err) => {
-        console.log(err);
-        reject(err);
+      this.getToken().then((val: any) => {
+        this.http.post(`${this.url}/plan`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          reject(err);
+        });
       });
     });
   }
@@ -37,12 +63,12 @@ export class ApiService {
    */
   allPlan(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.get(`${this.url}/plan/plans`).subscribe((res) => {
-        console.log(res);
-        resolve(res);
-      }, (err) => {
-        console.log(err);
-        reject(err);
+      this.getToken().then((val: any) => {
+        this.http.get(`${this.url}/plan/plans`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          reject(err);
+        });
       });
     });
   }
@@ -54,12 +80,12 @@ export class ApiService {
    */
   updatePlan(data: any, id: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.put(`${this.url}/plan/${id}`, data).subscribe((res) => {
-        console.log(res);
-        resolve(res);
-      }, (err) => {
-        console.log(err);
-        reject(err);
+      this.getToken().then((val: any) => {
+        this.http.put(`${this.url}/plan/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          reject(err);
+        });
       });
     });
   }
@@ -70,12 +96,12 @@ export class ApiService {
    */
   deletePlan(id: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.delete(`${this.url}/plan/plans/${id}`).subscribe((res) => {
-        console.log(res);
-        resolve(res);
-      }, (err) => {
-        console.log(err);
-        reject(err);
+      this.getToken().then((val: any) => {
+        this.http.delete(`${this.url}/plan/plans/${id}`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          reject(err);
+        });
       });
     });
   }
@@ -86,12 +112,12 @@ export class ApiService {
    */
   getCard(id: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.get(`${this.url}/plan/card/${id}`).subscribe((res) => {
-        console.log(res);
-        resolve(res);
-      }, (err) => {
-        console.log(err);
-        reject(err);
+      this.getToken().then((val: any) => {
+        this.http.get(`${this.url}/plan/card/${id}`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          reject(err);
+        });
       });
     });
   }

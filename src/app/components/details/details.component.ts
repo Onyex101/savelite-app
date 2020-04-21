@@ -57,11 +57,11 @@ export class DetailsComponent implements OnInit {
       ])],
       remark: [''],
     });
-    this.editExpenseForm.controls['date'].setValue(this.expense.date);
-    this.editExpenseForm.controls['amount'].setValue(this.expense.amount);
-    this.editExpenseForm.controls['category'].setValue(this.expense.category);
-    this.editExpenseForm.controls['descr'].setValue(this.expense.descr);
-    this.editExpenseForm.controls['remark'].setValue(this.expense.remark);
+    this.editExpenseForm.controls.date.setValue(this.expense.date);
+    this.editExpenseForm.controls.amount.setValue(this.expense.amount);
+    this.editExpenseForm.controls.category.setValue(this.expense.category);
+    this.editExpenseForm.controls.descr.setValue(this.expense.descr);
+    this.editExpenseForm.controls.remark.setValue(this.expense.remark);
   }
 
   onSubmit(value) {

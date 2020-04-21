@@ -81,7 +81,7 @@ export class AddExpensePage implements OnInit {
     value.id = this.randString(6);
     this.expenseService.addExpense(value).then(() => {
       this.addExpenseForm.reset();
-      this.router.navigateByUrl('/tabs/tabs/home');
+      this.router.navigateByUrl('/s-menu/s-menu/tabs/tabs/home');
     });
   }
 

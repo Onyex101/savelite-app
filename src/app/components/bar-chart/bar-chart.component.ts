@@ -30,6 +30,10 @@ export class BarChartComponent implements OnInit {
   public barChartData: ChartDataSets[] = [
     { data: [0, 0, 0, 0, 0, 0, 0], label: 'Category' }
   ];
+  public barChartColors = [
+    { backgroundColor: '#222831' },
+  ];
+
   constructor(
     private share: DataService
   ) { }

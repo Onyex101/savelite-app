@@ -9,10 +9,11 @@ import { SavingsPageRoutingModule } from './savings-routing.module';
 import { SavingsPage } from './savings.page';
 import { ComponentsModule } from './../../../components/components.module';
 import { NewPlanComponent } from './../../../components/new-plan/new-plan.component';
+import { PlanDetailComponent } from './../../../components/plan-detail/plan-detail.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
-  entryComponents: [NewPlanComponent],
+  entryComponents: [NewPlanComponent, PlanDetailComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,11 +21,9 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     SavingsPageRoutingModule,
     ComponentsModule,
     NgCircleProgressModule.forRoot({
-      radius: 100,
       showSubtitle: false,
-      showInnerStroke: false,
-      outerStrokeWidth: 16,
-      outerStrokeColor: '#d19115',
+      outerStrokeColor: '#222831',
+      innerStrokeColor: '#d19115',
       animationDuration: 500,
     })
   ],

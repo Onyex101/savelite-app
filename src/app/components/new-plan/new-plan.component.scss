@@ -1,5 +1,9 @@
 ion-content {
 
+    ion-toolbar {
+        --background: transparent;
+    }
+
     ion-grid {
         --ion-grid-padding: 0;
     }

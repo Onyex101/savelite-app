@@ -12,26 +12,15 @@ import { AuthService, TOKEN_KEY } from './services/auth/auth.service';
 import { ApiService } from './services/api/api.service';
 import { MaterialModule } from './material.module';
 import { ExpenseService } from './services/expenses/expense.service';
-
+import { CommonService } from './services/common/common.service';
 // plugins
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera/ngx';
-import { environment } from './../environments/environment';
 import { DataService } from './services/data/data.service';
-
-import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
-
-export function jwtOptionsFactory(storage) {
-  return {
-    tokenGetter: () => {
-      return storage.get(TOKEN_KEY);
-    },
-    whitelistedDomains: environment.whitelistedDomains,
-    blacklistedRoutes: environment.blacklistedRoutes
-  };
-}
+import { Network } from '@ionic-native/network/ngx';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,24 +33,20 @@ export function jwtOptionsFactory(storage) {
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    JwtModule.forRoot({
-      jwtOptionsProvider: {
-        provide: JWT_OPTIONS,
-        useFactory: jwtOptionsFactory,
-        deps: [Storage]
-      }
-    })
   ],
   providers: [
     StatusBar,
     SplashScreen,
     ExpenseService,
     Camera,
+    Network,
+    JwtHelperService,
     DataService,
     ApiService,
     AuthService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    CommonService,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

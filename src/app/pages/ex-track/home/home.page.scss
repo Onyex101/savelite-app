@@ -66,11 +66,14 @@ ion-label {
 .box2 {
     display: flex;
     border-radius: 8px;
-    padding: 5px;
+    padding: 10px;
     flex-direction: column;
     width: 100%;
     height: 50px;
     justify-content: center;
+    margin-bottom: 4px;
+    box-shadow: inset 5px 5px 10px #cfd0d3, 
+            inset -5px -5px 10px #ffffff;
 
     .title {
         font-size: 18px;

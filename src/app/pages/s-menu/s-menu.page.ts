@@ -1,5 +1,6 @@
 import { Router, RouterEvent } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from './../../services/auth/auth.service';
 
 @Component({
   selector: 'app-s-menu',
@@ -22,7 +23,8 @@ export class SMenuPage implements OnInit {
   ];
 
   constructor(
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) {
     this.router.events.subscribe((event: RouterEvent) => {
       if (event.url === '/s-menu') {
@@ -38,6 +40,8 @@ export class SMenuPage implements OnInit {
   }
 
   logout(): void {
-    this.router.navigateByUrl('/login');
+    this.auth.logout().then(() => {
+      this.router.navigateByUrl('/login');
+    });
   }
 }
