@@ -106,7 +106,9 @@ export class NewPlanComponent implements OnInit {
       this.planForm.reset();
       this.cardForm.reset();
       loading.dismiss();
-      this.modalCtrl.dismiss();
+      this.modalCtrl.dismiss({
+        created: true
+      });
     }).catch((e) => {
       console.log(e);
       loading.dismiss();

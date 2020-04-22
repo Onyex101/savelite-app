@@ -34,7 +34,8 @@
 
   <div class="container">
     <div class="progress">
-      <circle-progress [percent]="TotalPercentage" [radius]="100" [outerStrokeWidth]="16" [responsive]="true"></circle-progress>
+      <circle-progress [percent]="TotalPercentage" [radius]="100" [outerStrokeWidth]="16" [responsive]="true">
+      </circle-progress>
     </div>
   </div>
 
@@ -73,11 +74,18 @@
 
       <ion-row *ngIf="plan">
         <ion-col size="6" *ngFor="let p of plans">
-          <div class="plan ion-activatable ripple-parent" (click)="editPlan(p)">
-            <circle-progress [percent]="p.percentage" [radius]="45" [outerStrokeWidth]="5" [showInnerStroke]="true"
-              [innerStrokeWidth]="1"></circle-progress>
-            <p>{{p.planName}}</p>
-            <ion-ripple-effect></ion-ripple-effect>
+          <div class="plan ion-activatable ripple-parent">
+            <div style="width: 100%;">
+              <div class="ion-float-right" style="padding: 8px;" (click)="deletePlan(p._id)">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </div>
+            </div>
+            <div class="subPlan" (click)="editPlan(p)">
+              <circle-progress [percent]="p.percentage" [radius]="45" [outerStrokeWidth]="5" [showInnerStroke]="true"
+                [innerStrokeWidth]="1"></circle-progress>
+              <p>{{p.planName}}</p>
+              <ion-ripple-effect></ion-ripple-effect>
+            </div>
           </div>
         </ion-col>
       </ion-row>

@@ -1,6 +1,7 @@
-import { Router, RouterEvent } from '@angular/router';
+import { Router, RouterEvent, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../../services/auth/auth.service';
+import { IUser } from './../../interface/dto';
 
 @Component({
   selector: 'app-s-menu',
@@ -21,10 +22,12 @@ export class SMenuPage implements OnInit {
       path: '/s-menu/s-menu/savings'
     },
   ];
+  user: IUser;
 
   constructor(
     private router: Router,
-    private auth: AuthService
+    private route: ActivatedRoute,
+    private auth: AuthService,
   ) {
     this.router.events.subscribe((event: RouterEvent) => {
       if (event.url === '/s-menu') {
@@ -32,6 +35,12 @@ export class SMenuPage implements OnInit {
         this.activePath = event.url;
       } else {
         this.activePath = event.url;
+      }
+    });
+    this.route.queryParams.subscribe((params) => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.user = this.router.getCurrentNavigation().extras.state.user;
+        console.log(this.user);
       }
     });
   }

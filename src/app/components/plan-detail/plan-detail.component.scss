@@ -3,6 +3,14 @@ ion-content {
         --background: transparent;
     }
 
+    img {
+        position: absolute;
+        top: 15%;
+        left: 0;
+        z-index: 1;
+        max-height: 500px;
+    }
+
     ion-grid {
         --ion-grid-padding: 0;
     }
@@ -20,6 +28,7 @@ ion-content {
         border-radius: 10px;
         --background: #e1f3f3;
         opacity: 0.8;
+        z-index: 1000;
         // --background: transparent;
     }
 

@@ -3,6 +3,15 @@ export interface ILogin {
     password: string;
 }
 
+export interface IUser {
+    id: string;
+    fullname: string;
+    username: string;
+    email: string;
+    phone_no: string;
+    profileImage?: string;
+}
+
 export interface IReg {
     name: string;
     username: string;

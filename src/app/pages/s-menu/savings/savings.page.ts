@@ -17,6 +17,7 @@ export class SavingsPage implements OnInit {
   TtlAmt = 0;
   TotalTgtAmt = 0;
   TotalPercentage = 0;
+  copy: any[];
 
   constructor(
     public modalController: ModalController,
@@ -28,6 +29,9 @@ export class SavingsPage implements OnInit {
   }
 
   getPlans() {
+    this.TtlAmt = 0;
+    this.TotalTgtAmt = 0;
+    this.TotalPercentage = 0;
     this.api.allPlan().then((res) => {
       res.forEach((item) => {
         // tslint:disable-next-line: radix
@@ -40,6 +44,7 @@ export class SavingsPage implements OnInit {
       });
       this.TotalPercentage = (this.TtlAmt / this.TotalTgtAmt) * 100;
       console.log(res);
+      this.copy = [...res];
       this.plans = res;
       this.plan = true;
       this.loading = false;
@@ -54,7 +59,12 @@ export class SavingsPage implements OnInit {
       backdropDismiss: false,
       swipeToClose: false
     });
-    return await modal.present();
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    console.log(data);
+    if (data !== undefined) {
+      this.getPlans();
+    }
   }
 
   async editPlan(plan: any) {
@@ -64,7 +74,20 @@ export class SavingsPage implements OnInit {
       backdropDismiss: false,
       swipeToClose: false
     });
-    return await modal.present();
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    console.log(data);
+    if (data !== undefined) {
+      this.getPlans();
+    }
+  }
+
+  deletePlan(id: string) {
+    this.api.deletePlan(id).then((res) => {
+      this.getPlans();
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 
   doRefresh(event: any) {

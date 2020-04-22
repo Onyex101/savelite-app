@@ -78,7 +78,7 @@ export class ApiService {
    * @param data updated plan details
    * @param id plan id
    */
-  updatePlan(data: any, id: number): Promise<any> {
+  updatePlan(data: any, id: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getToken().then((val: any) => {
         this.http.put(`${this.url}/plan/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
@@ -94,10 +94,10 @@ export class ApiService {
    * deletes the selected plan
    * @param id plan id
    */
-  deletePlan(id: number): Promise<any> {
+  deletePlan(id: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getToken().then((val: any) => {
-        this.http.delete(`${this.url}/plan/plans/${id}`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+        this.http.delete(`${this.url}/plan/${id}`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
           resolve(res.body);
         }, (err) => {
           reject(err);
@@ -110,7 +110,7 @@ export class ApiService {
    * retrieves encrypted card details
    * @param id card id
    */
-  getCard(id: number): Promise<any> {
+  getCard(id: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getToken().then((val: any) => {
         this.http.get(`${this.url}/plan/card/${id}`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {

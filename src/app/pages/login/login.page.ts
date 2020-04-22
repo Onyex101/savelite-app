@@ -1,10 +1,11 @@
-import { AuthService } from './../../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthService } from './../../services/auth/auth.service';
 import { CommonService } from './../../services/common/common.service';
 import { ForgotPasswordComponent } from './../../components/forgot-password/forgot-password.component';
+import { IUser } from './../../interface/dto';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,7 @@ export class LoginPage implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private auth: AuthService,
-    public common: CommonService
+    public common: CommonService,
   ) { }
 
   ngOnInit() {
@@ -57,11 +58,16 @@ export class LoginPage implements OnInit {
       console.log('Please provide all the required values!');
     } else {
       this.common.loadingPresent();
-      this.auth.login(this.loginForm.value).then((res) => {
+      this.auth.login(this.loginForm.value).then((res: IUser) => {
         console.log(res);
         this.loginForm.reset();
         this.common.loadingDismiss();
-        this.router.navigateByUrl('/s-menu');
+        const navExtras: NavigationExtras = {
+          state: {
+            user: res
+          }
+        };
+        this.router.navigate(['s-menu'], navExtras);
       }).catch((err) => {
         console.log(err);
         this.common.loadingDismiss().then(() => {

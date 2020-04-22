@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, AlertController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ErrorMessages } from './../../pages/validation';
 import { IPlan } from './../../interface/dto';
+import { ApiService } from './../../services/api/api.service';
 
 @Component({
   selector: 'app-plan-detail',
@@ -16,14 +17,21 @@ export class PlanDetailComponent implements OnInit {
   cardForm: FormGroup;
   planError = ErrorMessages.planError;
   duration: Array<string>;
+  card = false;
+  showButton = false;
 
   constructor(
     private modalCtrl: ModalController,
     private navParam: NavParams,
     private formBuilder: FormBuilder,
+    private api: ApiService,
+    public alertController: AlertController
   ) {
     this.plan = this.navParam.get('plan');
     console.log(this.plan);
+    if (this.plan.card.amount !== '0') {
+      this.showButton = true;
+    }
     this.duration = ['monthly', 'weekly', 'daily'];
   }
 
@@ -94,11 +102,27 @@ export class PlanDetailComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  next() {
-
+  toggle() {
+    this.card = !this.card;
   }
 
-  onSubmit() {
+  async onSubmit() {
+    if (this.planForm.valid && this.cardForm.valid) {
+      this.planForm.value.card = this.cardForm.value;
+      console.log(this.planForm.value);
+      this.api.updatePlan(this.planForm.value, this.plan._id).then((res) => {
+        this.modalCtrl.dismiss({updated: true});
+      }).catch((err) => {
+        console.log(err);
+      });
+    } else {
+      const alert = await this.alertController.create({
+        header: 'Alert',
+        message: 'Form details are invalid',
+        buttons: ['OK']
+      });
 
+      await alert.present();
+    }
   }
 }
