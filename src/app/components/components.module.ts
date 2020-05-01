@@ -1,3 +1,4 @@
+import { AddExpenseComponent } from './add-expense/add-expense.component';
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -30,7 +31,8 @@ import { DataService } from './../services/data/data.service';
     DetailsComponent,
     ForgotPasswordComponent,
     NewPlanComponent,
-    PlanDetailComponent
+    PlanDetailComponent,
+    AddExpenseComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +50,8 @@ import { DataService } from './../services/data/data.service';
     DetailsComponent,
     ForgotPasswordComponent,
     NewPlanComponent,
-    PlanDetailComponent
+    PlanDetailComponent,
+    AddExpenseComponent
   ],
   providers: [DataService]
 })

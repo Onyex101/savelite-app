@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PasswordValidator, PhoneValidator, CountryPhone } from './../validation';
+import { PasswordValidator, PhoneValidator, CountryPhone, ErrorMessages } from './../validation';
 import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { Camera, PictureSourceType } from '@ionic-native/camera/ngx';
 import { AuthService } from './../../services/auth/auth.service';
@@ -21,39 +21,7 @@ export class RegisterPage implements OnInit {
   countries: Array<CountryPhone>;
   genders: Array<string>;
 
-  errorMessage = {
-    username: [
-      { type: 'required', message: 'Username is required.' },
-      { type: 'minlength', message: 'Username must be at least 5 characters long.' },
-      { type: 'maxlength', message: 'Username cannot be more than 25 characters long.' },
-      { type: 'pattern', message: 'Your username must contain only numbers and letters.' },
-    ],
-    name: [
-      { type: 'required', message: 'Last name is required.' }
-    ],
-    email: [
-      { type: 'required', message: 'Email is required.' },
-      { type: 'pattern', message: 'Please wnter a valid email.' }
-    ],
-    phone: [
-      { type: 'required', message: 'Phone is required.' },
-      { type: 'validCountryPhone', message: 'The phone is incorrect for the selected country.' }
-    ],
-    password: [
-      { type: 'minlength', message: 'Password must be at least 5 characters long.' },
-      { type: 'required', message: 'Password is required.' },
-      { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number.' }
-    ],
-    confirm_password: [
-      { type: 'required', message: 'Confirm password is required.' }
-    ],
-    matching_passwords: [
-      { type: 'areEqual', message: 'Password mismatch.' }
-    ],
-    terms: [
-      { type: 'pattern', message: 'You must accept terms and conditions.' }
-    ],
-  };
+  errorMessage = ErrorMessages.registerError;
 
   constructor(
     private router: Router,
@@ -164,11 +132,20 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  onSubmit(values?) {
+  async onSubmit(values?) {
+    const loading = await this.loadingController.create({
+      translucent: true,
+      backdropDismiss: false
+    });
+    await loading.present();
     this.auth.register(values).then((res) => {
       console.log(res);
       this.regForm.reset();
+      loading.dismiss();
       this.router.navigateByUrl('/login');
-    }).catch((e) => console.log(e));
+    }).catch((e) => {
+      console.log(e);
+      loading.dismiss();
+    });
   }
 }

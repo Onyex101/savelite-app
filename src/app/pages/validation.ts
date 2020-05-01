@@ -98,6 +98,53 @@ export class CountryPhone {
 }
 
 export const ErrorMessages = {
+
+  loginError: {
+    username: [
+      { type: 'required', message: 'Username is required.' },
+      { type: 'minlength', message: 'Username must be at least 5 characters long.' },
+      { type: 'maxlength', message: 'Username cannot be more than 20 characters long.' },
+    ],
+    password: [
+      { type: 'required', message: 'Password is required.' },
+      { type: 'minlength', message: 'Password must be at least 5 characters long.' },
+    ],
+  },
+
+  registerError: {
+    username: [
+      { type: 'required', message: 'Username is required.' },
+      { type: 'minlength', message: 'Username must be at least 5 characters long.' },
+      { type: 'maxlength', message: 'Username cannot be more than 25 characters long.' },
+      { type: 'pattern', message: 'Your username must contain only numbers and letters.' },
+    ],
+    name: [
+      { type: 'required', message: 'Last name is required.' }
+    ],
+    email: [
+      { type: 'required', message: 'Email is required.' },
+      { type: 'pattern', message: 'Please wnter a valid email.' }
+    ],
+    phone: [
+      { type: 'required', message: 'Phone is required.' },
+      { type: 'validCountryPhone', message: 'The phone is incorrect for the selected country.' }
+    ],
+    password: [
+      { type: 'minlength', message: 'Password must be at least 5 characters long.' },
+      { type: 'required', message: 'Password is required.' },
+      { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number.' }
+    ],
+    confirm_password: [
+      { type: 'required', message: 'Confirm password is required.' }
+    ],
+    matching_passwords: [
+      { type: 'areEqual', message: 'Password mismatch.' }
+    ],
+    terms: [
+      { type: 'pattern', message: 'You must accept terms and conditions.' }
+    ],
+  },
+
   planError: {
     planName: [
       { type: 'required', message: 'Plan name is required.' },
@@ -134,5 +181,42 @@ export const ErrorMessages = {
       { type: 'min', message: 'pin cannot be less than 4 characters long.' },
       { type: 'max', message: 'pin cannot be more than 4 characters long.' },
     ],
+  },
+
+  addExpenseError: {
+    date: [
+      { type: 'required', message: 'Please enter a Date.' },
+    ],
+    amount: [
+      { type: 'required', message: 'Please enter an amount.' },
+      { type: 'pattern', message: 'Please enter a positive amount' },
+    ],
+    descr: [
+      { type: 'required', message: 'Description is required.' },
+    ],
+  },
+
+  budgetError: {
+    budgetName: [
+      { type: 'required', message: 'Please enter a name.' },
+    ],
+    budget: [
+      { type: 'required', message: 'Please enter an amount.' },
+      { type: 'pattern', message: 'Please enter a positive amount' },
+    ],
+  },
+
+  editExpenseError: {
+    date: [
+      { type: 'required', message: 'Please enter a Date.' },
+    ],
+    amount: [
+      { type: 'required', message: 'Please enter an amount.' },
+      { type: 'pattern', message: 'Please enter a positive amount' },
+    ],
+    descr: [
+      { type: 'required', message: 'Description is required.' },
+    ],
   }
+
 };

@@ -1,11 +1,19 @@
 ion-content {
 
-    img{
+    ion-toolbar {
+        --background: transparent;
+        ion-icon {
+            font-size: 42px;
+        }
+    }
+
+    img {
         position: absolute;
         top: 70px;
         right: 0;
         z-index: 1;
     }
+
     .header {
         padding: 16px 0;
         margin-bottom: 8px;
@@ -17,7 +25,7 @@ ion-content {
             border-radius: 10px;
 
             ion-icon {
-                font-size: 36px;
+                font-size: 42px;
             }
         }
 
@@ -46,6 +54,7 @@ ion-content {
     ion-grid {
         --ion-grid-padding: 0;
     }
+
     .error-message {
         color: red;
         font-size: 14px;

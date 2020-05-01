@@ -7,14 +7,6 @@ export const environment = {
   apiUrl: 'http://localhost:3000',
   IMGUR_ENDPOINT: 'https://api.imgur.com/3/upload',
   IMGUR_CLIENT_ID: '924ff8331aaf4c1',
-  whitelistedDomains: [
-    'http://localhost:3000/',
-  ],
-  blacklistedRoutes: [
-    'https://api.imgur.com/3/upload',
-    'http://localhost:3000/user/signup',
-    'http://localhost:3000/user/login'
-  ]
 };
 
 /*

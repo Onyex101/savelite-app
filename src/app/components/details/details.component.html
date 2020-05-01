@@ -1,14 +1,18 @@
 <ion-content class="ion-padding">
   <ion-toolbar>
     <ion-buttons slot="end">
+      <ion-button (click)="toggleEdit()">
+        <ion-icon slot="icon-only" size="large" name="create"></ion-icon>
+      </ion-button>
       <ion-button (click)="dismiss()">
-        <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+        <ion-icon slot="icon-only" size="large" name="close-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 
   <img src="assets/images/wallet.svg">
-  <div class="text">View/Edit Expense</div>
+  <div class="text" *ngIf="edit">Edit Expense</div>
+  <div class="text" *ngIf="!edit">Expense</div>
 
   <form [formGroup]="editExpenseForm" (ngSubmit)="onSubmit(editExpenseForm.value)">
     <ion-item>
@@ -63,7 +67,7 @@
       <ion-input type="text" formControlName="remark"></ion-input>
     </ion-item>
 
-    <ion-button color="primary" class="ion-margin-top" expand="full" type="submit" [disabled]="!editExpenseForm.valid">
+    <ion-button color="primary" class="ion-margin-top" expand="full" type="submit" *ngIf="edit">
       Update</ion-button>
   </form>
 </ion-content>

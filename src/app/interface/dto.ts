@@ -48,3 +48,30 @@ export interface IMail {
     email: string;
 }
 
+export interface IExpense {
+    _id: string;
+    date: string;
+    amount: number;
+    category: string;
+    descr: string;
+    remark?: string;
+    icon?: string;
+}
+
+export interface IBudget {
+    _id?: string;
+    budgetName: string;
+    budget: number;
+}
+
+export interface Iimage {
+    id: string;
+    name: string;
+    datetime: number;
+    type: string;
+    width: number;
+    height: number;
+    size: number;
+    deletehash: string;
+    link: string;
+}

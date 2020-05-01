@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, NavigationExtras } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from './../../services/auth/auth.service';
-import { CommonService } from './../../services/common/common.service';
 import { ForgotPasswordComponent } from './../../components/forgot-password/forgot-password.component';
+import { ErrorMessages } from './../validation';
 import { IUser } from './../../interface/dto';
 
 @Component({
@@ -16,25 +17,27 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
   isSubmitted = false;
-  validationMessages = {
-    username: [
-      { type: 'required', message: 'Username is required.' },
-      { type: 'minlength', message: 'Username must be at least 5 characters long.' },
-      { type: 'maxlength', message: 'Username cannot be more than 20 characters long.' },
-    ],
-    password: [
-      { type: 'required', message: 'Password is required.' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long.' },
-    ],
-  };
+  validationMessages = ErrorMessages.loginError;
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
+    public alertController: AlertController,
+    public loadingController: LoadingController,
+    public toastController: ToastController,
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private auth: AuthService,
-    public common: CommonService,
-  ) { }
+  ) {
+    this.route.queryParams.subscribe(() => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        const authenticated = this.router.getCurrentNavigation().extras.state.authentication;
+        if (authenticated === 'Expired') {
+          this.presentAlert();
+        }
+      }
+    });
+  }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -52,26 +55,30 @@ export class LoginPage implements OnInit {
 
   get formControls() { return this.loginForm.controls; }
 
-  login(): void {
+  async login() {
     this.isSubmitted = true;
     if (!this.loginForm.valid) {
       console.log('Please provide all the required values!');
     } else {
-      this.common.loadingPresent();
+      const loading = await this.loadingController.create({
+        translucent: false,
+        backdropDismiss: false
+      });
+      await loading.present();
       this.auth.login(this.loginForm.value).then((res: IUser) => {
         console.log(res);
         this.loginForm.reset();
-        this.common.loadingDismiss();
+        loading.dismiss();
         const navExtras: NavigationExtras = {
           state: {
-            user: res
+            user: res,
           }
         };
         this.router.navigate(['s-menu'], navExtras);
       }).catch((err) => {
         console.log(err);
-        this.common.loadingDismiss().then(() => {
-          this.common.presentToast(err.error.message);
+        loading.dismiss().then(() => {
+          this.presentToast(err.error.message);
         });
       });
     }
@@ -84,16 +91,20 @@ export class LoginPage implements OnInit {
       data: {}
     });
 
-    dialogRef.afterClosed().subscribe(email => {
+    dialogRef.afterClosed().subscribe(async (email) => {
       if (email !== undefined) {
         console.log('email', email);
-        this.common.loadingPresent();
+        const loading = await this.loadingController.create({
+          translucent: false,
+          backdropDismiss: false
+        });
+        await loading.present();
         this.auth.sendEmail({ email }).then((res) => {
           console.log('email', res);
-          this.common.loadingDismiss();
+          loading.dismiss();
         }).catch((e) => {
           console.log(e);
-          this.common.loadingDismiss();
+          loading.dismiss();
         });
       }
     });
@@ -104,4 +115,21 @@ export class LoginPage implements OnInit {
     this.router.navigate(['register']);
   }
 
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 4000
+    });
+    toast.present();
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: 'Session expired, please login again',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
 }

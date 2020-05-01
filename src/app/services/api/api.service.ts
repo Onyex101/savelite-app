@@ -1,7 +1,8 @@
+import { Router, NavigationExtras } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
-import { IPlan } from './../../interface/dto';
+import { IPlan, IBudget, Iimage, IExpense } from './../../interface/dto';
 import { Storage } from '@ionic/storage';
 import { TOKEN_KEY } from './../auth/auth.service';
 
@@ -9,14 +10,15 @@ import { TOKEN_KEY } from './../auth/auth.service';
   providedIn: 'root'
 })
 export class ApiService {
-  private url = `${environment.apiUrl}/user`;
+  private url = `${environment.apiUrl}`;
 
   private clientID = environment.IMGUR_CLIENT_ID;
   private imgurEndPoint = environment.IMGUR_ENDPOINT;
 
   constructor(
     private http: HttpClient,
-    private storage: Storage
+    private storage: Storage,
+    private router: Router,
   ) { }
 
   /**
@@ -52,6 +54,7 @@ export class ApiService {
         this.http.post(`${this.url}/plan`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
           resolve(res.body);
         }, (err) => {
+          this.sessionExpired(err);
           reject(err);
         });
       });
@@ -64,9 +67,10 @@ export class ApiService {
   allPlan(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getToken().then((val: any) => {
-        this.http.get(`${this.url}/plan/plans`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+        this.http.get(`${this.url}/plan`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
           resolve(res.body);
         }, (err) => {
+          this.sessionExpired(err);
           reject(err);
         });
       });
@@ -81,9 +85,10 @@ export class ApiService {
   updatePlan(data: any, id: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getToken().then((val: any) => {
-        this.http.put(`${this.url}/plan/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+        this.http.post(`${this.url}/plan/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
           resolve(res.body);
         }, (err) => {
+          this.sessionExpired(err);
           reject(err);
         });
       });
@@ -100,6 +105,7 @@ export class ApiService {
         this.http.delete(`${this.url}/plan/${id}`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
           resolve(res.body);
         }, (err) => {
+          this.sessionExpired(err);
           reject(err);
         });
       });
@@ -116,6 +122,7 @@ export class ApiService {
         this.http.get(`${this.url}/plan/card/${id}`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
           resolve(res.body);
         }, (err) => {
+          this.sessionExpired(err);
           reject(err);
         });
       });
@@ -178,8 +185,125 @@ export class ApiService {
       this.http.delete(`${this.imgurEndPoint}/${imageDeleteHash}`, httpOptions).subscribe((res) => {
         resolve(res);
       }, (err) => {
+        this.sessionExpired(err);
         reject(err);
       });
     });
+  }
+
+  postImage(data: Iimage, id: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getToken().then((val: any) => {
+        this.http.post(`${this.url}/budget/image/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          this.sessionExpired(err);
+          reject(err);
+        });
+      });
+    });
+  }
+
+  deleteImage(bId: string, id: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getToken().then((val: any) => {
+        // tslint:disable-next-line: max-line-length
+        this.http.delete(`${this.url}/budget/image/${bId}/${id}`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          this.sessionExpired(err);
+          reject(err);
+        });
+      });
+    });
+  }
+
+  allBudgets(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getToken().then((val: any) => {
+        this.http.get(`${this.url}/expense/budgets`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          this.sessionExpired(err);
+          reject(err);
+        });
+      });
+    });
+  }
+
+  newBudget(data: IBudget): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getToken().then((val: any) => {
+        this.http.post(`${this.url}/expense/budget/post`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          this.sessionExpired(err);
+          reject(err);
+        });
+      });
+    });
+  }
+
+  editBudget(data: IBudget, id: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getToken().then((val: any) => {
+        this.http.post(`${this.url}/expense/budget/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          this.sessionExpired(err);
+          reject(err);
+        });
+      });
+    });
+  }
+
+  newExpense(data: IExpense, id: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getToken().then((val: any) => {
+        this.http.post(`${this.url}/expense/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          this.sessionExpired(err);
+          reject(err);
+        });
+      });
+    });
+  }
+
+  editExpense(data: IExpense, bId: string, id: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getToken().then((val: any) => {
+        this.http.post(`${this.url}/expense/${bId}/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          this.sessionExpired(err);
+          reject(err);
+        });
+      });
+    });
+  }
+
+  deleteExpense(bId: string, id: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getToken().then((val: any) => {
+        this.http.delete(`${this.url}/expense/${bId}/${id}`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          this.sessionExpired(err);
+          reject(err);
+        });
+      });
+    });
+  }
+
+  private sessionExpired(error: HttpErrorResponse) {
+    if (error.status === 401 && error.statusText === 'Unauthorized') {
+      const navigationExtras: NavigationExtras = {
+        state: {
+          authentication: 'Expired'
+        }
+      };
+      this.router.navigate(['login'], navigationExtras);
+    }
   }
 }

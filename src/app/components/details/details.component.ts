@@ -1,8 +1,10 @@
+import { ApiService } from './../../services/api/api.service';
 import { Component, OnInit } from '@angular/core';
 import { NavParams } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ExpenseService, IExpense } from './../../services/expenses/expense.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
+import { IExpense } from 'src/app/interface/dto';
+import { ErrorMessages } from './../../pages/validation';
 
 @Component({
   selector: 'app-details',
@@ -14,26 +16,20 @@ export class DetailsComponent implements OnInit {
   expense: IExpense;
   editExpenseForm: FormGroup;
   categories: Array<string>;
-  errorMessage = {
-    date: [
-      { type: 'required', message: 'Please enter a Date.' },
-    ],
-    amount: [
-      { type: 'required', message: 'Please enter an amount.' },
-      { type: 'pattern', message: 'Please enter a positive amount' },
-    ],
-    descr: [
-      { type: 'required', message: 'Description is required.' },
-    ],
-  };
+  budgetId: string;
+  edit = false;
+  errorMessage = ErrorMessages.editExpenseError;
+
   constructor(
     private navParams: NavParams,
     private formBuilder: FormBuilder,
-    private expenseService: ExpenseService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    public loadingController: LoadingController,
+    private api: ApiService
   ) {
     this.categories = ['Health', 'Food', 'Education', 'Transport', 'Entertainment', 'Shopping', 'Others'];
-    this.expense = navParams.get('expense');
+    this.expense = this.navParams.get('expense');
+    this.budgetId = this.navParams.get('id');
   }
 
   ngOnInit() {
@@ -64,16 +60,35 @@ export class DetailsComponent implements OnInit {
     this.editExpenseForm.controls.remark.setValue(this.expense.remark);
   }
 
-  onSubmit(value) {
-    value.id = this.expense.id;
+  toggleEdit() {
+    this.edit = !this.edit;
+    // if (this.edit) {
+    //   this.editExpenseForm.enable();
+    // } else {
+    //   this.editExpenseForm.disable();
+    // }
+  }
+
+  async onSubmit(value) {
+    const loading = await this.loadingController.create({
+      translucent: false,
+      backdropDismiss: false
+    });
+    await loading.present();
     value.icon = this.expense.icon;
-    this.expenseService.editExpense(value).then(() => {
+    this.api.editExpense(value, this.budgetId, this.expense._id).then(() => {
       this.editExpenseForm.reset();
+      loading.dismiss();
       this.modalCtrl.dismiss();
+    }).catch((e) => {
+      console.log(e);
+      loading.dismiss();
     });
   }
 
   dismiss() {
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss({
+      dismissed: true
+    });
   }
 }

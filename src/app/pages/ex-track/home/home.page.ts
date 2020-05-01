@@ -1,11 +1,13 @@
-import { ExpenseService, IExpense } from './../../../services/expenses/expense.service';
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ModalController } from '@ionic/angular';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalController, AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { BudgetModalComponent } from './../../../components/budget-modal/budget-modal.component';
 import { DetailsComponent } from './../../../components/details/details.component';
 import { DataService } from './../../../services/data/data.service';
+import { IBudget, IExpense } from './../../../interface/dto';
+import { ApiService } from './../../../services/api/api.service';
+import { AddExpenseComponent } from './../../../components/add-expense/add-expense.component';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-home',
@@ -15,73 +17,182 @@ import { DataService } from './../../../services/data/data.service';
 export class HomePage implements OnInit {
 
   anyExpense = false;
+  spinner = true;
+  b: any;
+  allBudgets: IBudget[];
   diag = false;
-  expenseList: Array<IExpense>;
-  budget: number;
-  expense: number;
-  balance: number;
+  budget = 0;
+  expense = 0;
+  balance = 0;
+  expenseList: IExpense[];
   chart: Array<[string, any]>;
+  storageId: string;
 
   constructor(
-    private router: Router,
     public dialog: MatDialog,
-    private expenseService: ExpenseService,
-    private share: DataService,
-    public modalController: ModalController
+    private apiService: ApiService,
+    public share: DataService,
+    public mainShare: DataService,
+    public modalController: ModalController,
+    public loadingController: LoadingController,
+    public alertController: AlertController,
+    public toastController: ToastController,
+    private storage: Storage
   ) {
+    this.allBudgets = [];
   }
 
-  ngOnInit() {
-    this.expenseService.currentExpList.subscribe((exp) => {
-      this.expenseList = exp;
-      if (this.expenseList.length > 0) {
-        this.anyExpense = true;
+  async ngOnInit() {
+    this.storageId = await this.storage.get('BudgetId');
+    console.log('id store', this.storageId);
+    if (this.storageId === null) {
+      await this.getBudgets();
+    } else {
+      await this.getBudgets(true);
+    }
+  }
+
+  async getBudgets(Id?: boolean) {
+    this.anyExpense = false;
+    this.spinner = true;
+    try {
+      const res = await this.apiService.allBudgets();
+      console.log(res);
+      if (res.length > 0) {
+        if (Id === true) {
+           res.forEach((item: any) => {
+            if (this.storageId === item._id) {
+              this.b = item;
+            }
+          });
+        } else {
+          this.b = res[0];
+        }
+        console.log(this.b);
+        this.budget = this.b.budget;
+        this.storage.set('BudgetId', this.b._id);
+        this.expenseList = this.b.expenses;
+        if (this.expenseList.length > 0) {
+          this.anyExpense = true;
+          this.calculate();
+        }
+        this.spinner = false;
       }
-      // console.log('expenses', exp);
-      this.calculate();
+      this.allBudgets = res;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async delExp(id: string) {
+    const loading = await this.loadingController.create({
+      translucent: false,
+      backdropDismiss: false
     });
-    this.expenseService.currentBudget.subscribe((b) => {
-      this.budget = b;
-      // console.log('budget', b);
+    await loading.present();
+    try {
+      const res = await this.apiService.deleteExpense(this.b._id, id);
+      console.log(res);
+      this.expenseList = res;
       this.calculate();
-    });
+    } catch (error) {
+      console.log(error);
+    }
+    loading.dismiss();
   }
 
-  sddExpense() {
-    this.router.navigateByUrl('/add-expense');
-  }
-
-  delExp(id: string) {
-    this.expenseService.deleteExpense(id);
-  }
-
-  openDialog(): void {
+  newBudget(): void {
     const dialogRef = this.dialog.open(BudgetModalComponent, {
       width: '300px',
-      data: {}
+      data: { edit: false }
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        this.expenseService.setBudget(result);
-        this.budget = result;
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result !== undefined || null) {
+        const loading = await this.loadingController.create({
+          translucent: false,
+          backdropDismiss: false
+        });
+        await loading.present();
+        this.apiService.newBudget(result).then((res) => {
+          if (res.msg) {
+            this.presentToast(res.msg.message);
+          } else {
+            this.allBudgets.push(res);
+            this.allBudgets.forEach((item) => {
+              if (item._id === res._id) {
+                this.b = item;
+              }
+            });
+            this.budget = this.b.budget;
+            this.storage.set('BudgetId', this.b._id);
+            this.expenseList = this.b.expenses;
+            if (this.expenseList.length > 0) {
+              this.anyExpense = true;
+              this.calculate();
+            } else {
+              this.anyExpense = false;
+            }
+          }
+          console.log(res);
+          loading.dismiss();
+        }).catch((err) => {
+          console.log(err);
+          loading.dismiss();
+        });
       }
     });
   }
 
-  openExpense() {
+  editBudget() {
     const dialogRef = this.dialog.open(BudgetModalComponent, {
       width: '300px',
-      data: {}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        this.expenseService.setBudget(result);
-        this.budget = result;
-        this.router.navigateByUrl('/s-menu/s-menu/tabs/tabs/add-expense');
+      data: {
+        edit: true,
+        details: {
+          budgetName: this.b.budgetName,
+          budget: this.b.budget
+        }
       }
     });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      console.log(result);
+      console.log(this.b._id);
+      if (result !== undefined || null) {
+        const loading = await this.loadingController.create({
+          translucent: false,
+          backdropDismiss: false
+        });
+        await loading.present();
+        this.apiService.editBudget(result, this.b._id).then(async (res) => {
+          console.log(res);
+          await this.getBudgets(true);
+          loading.dismiss();
+        }).catch((err) => {
+          console.log(err);
+          loading.dismiss();
+        });
+      }
+    });
+  }
+
+  async openExpense() {
+    if (this.b === undefined) {
+      this.newBudget();
+    } else {
+      const modal = await this.modalController.create({
+        component: AddExpenseComponent,
+        componentProps: {
+          id: this.b._id,
+        }
+      });
+      await modal.present();
+      const { data } = await modal.onWillDismiss();
+      console.log('modal closed', data);
+      if (data === undefined) {
+        this.storageId = this.b._id;
+        await this.getBudgets(true);
+      }
+    }
   }
 
   calculate() {
@@ -109,8 +220,7 @@ export class HomePage implements OnInit {
     this.expense = expenses;
     this.balance = this.budget - this.expense;
     data = [h, f, e, t, m, s, o];
-    this.share.changeData(data);
-    // console.log('categorize', data);
+    this.mainShare.changeData(data);
   }
 
   async editExpense(expense: IExpense) {
@@ -118,12 +228,65 @@ export class HomePage implements OnInit {
       component: DetailsComponent,
       componentProps: {
         expense,
+        id: this.b._id,
       }
     });
-    return await modal.present();
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    console.log('modal closed', data);
+    if (data === undefined) {
+      this.storageId = this.b._id;
+      await this.getBudgets(true);
+    }
   }
 
-  logout() {
-    this.router.navigateByUrl('/login');
+  private isEmpty(obj: any) {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        return false;
+      }
+    }
+    return true;
   }
+
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      buttons: ['OK']
+    });
+    toast.present();
+  }
+
+  budgetSelect(event) {
+    console.log(this.b);
+    this.budget = this.b.budget;
+    this.storage.set('BudgetId', this.b._id);
+    this.expenseList = this.b.expenses;
+    if (this.expenseList.length > 0) {
+      this.calculate();
+      this.anyExpense = true;
+    } else {
+      this.anyExpense = false;
+    }
+  }
+
+  async doRefresh(event) {
+    try {
+      await this.getBudgets();
+      event.target.complete();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 }

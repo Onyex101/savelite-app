@@ -1,45 +1,35 @@
-import { ExpenseService, IExpense } from './../../../services/expenses/expense.service';
-import { Router } from '@angular/router';
+
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IExpense } from 'src/app/interface/dto';
+import { LoadingController, NavParams, ModalController } from '@ionic/angular';
+import { ErrorMessages } from './../../pages/validation';
+import { ApiService } from './../../services/api/api.service';
 
 @Component({
   selector: 'app-add-expense',
-  templateUrl: './add-expense.page.html',
-  styleUrls: ['./add-expense.page.scss'],
+  templateUrl: './add-expense.component.html',
+  styleUrls: ['./add-expense.component.scss'],
 })
-export class AddExpensePage implements OnInit {
+export class AddExpenseComponent implements OnInit {
 
   addExpenseForm: FormGroup;
   categories: Array<string>;
-  errorMessage = {
-    date: [
-      { type: 'required', message: 'Please enter a Date.' },
-    ],
-    amount: [
-      { type: 'required', message: 'Please enter an amount.' },
-      { type: 'pattern', message: 'Please enter a positive amount' },
-    ],
-    descr: [
-      { type: 'required', message: 'Description is required.' },
-    ],
-  };
+  errorMessage = ErrorMessages.addExpenseError;
+  budgetId: string;
+
   constructor(
-    private router: Router,
     private formBuilder: FormBuilder,
-    private expenseService: ExpenseService
+    public loadingController: LoadingController,
+    private api: ApiService,
+    private navParams: NavParams,
+    private modalCtrl: ModalController,
   ) {
     this.categories = ['Health', 'Food', 'Education', 'Transport', 'Entertainment', 'Shopping', 'Others'];
+    this.budgetId = navParams.get('id');
   }
 
   ngOnInit() {
-    // this.db.dbState().subscribe((res) => {
-    //   if (res) {
-    //     this.db.fetchExpenses().subscribe(item => {
-    //       console.log(item);
-    //     });
-    //   }
-    // });
     this.initForm();
   }
 
@@ -62,7 +52,12 @@ export class AddExpensePage implements OnInit {
     });
   }
 
-  createExpense(value: IExpense) {
+  async createExpense(value: IExpense) {
+    const loading = await this.loadingController.create({
+      translucent: false,
+      backdropDismiss: false
+    });
+    await loading.present();
     if (value.category === 'Health') {
       value.icon = 'medkit';
     } else if (value.category === 'Food') {
@@ -77,11 +72,12 @@ export class AddExpensePage implements OnInit {
       value.icon = 'cart';
     } else {
       value.icon = 'ellipsis-horizontal';
-    };
-    value.id = this.randString(6);
-    this.expenseService.addExpense(value).then(() => {
+    }
+    this.api.newExpense(value, this.budgetId).then((res) => {
+      console.log(res);
       this.addExpenseForm.reset();
-      this.router.navigateByUrl('/s-menu/s-menu/tabs/tabs/home');
+      loading.dismiss();
+      this.modalCtrl.dismiss();
     });
   }
 
@@ -92,5 +88,12 @@ export class AddExpensePage implements OnInit {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
+  }
+
+  dismiss() {
+    this.addExpenseForm.reset();
+    this.modalCtrl.dismiss({
+      dismissed: true
+    });
   }
 }
