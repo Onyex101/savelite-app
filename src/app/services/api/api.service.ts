@@ -247,7 +247,8 @@ export class ApiService {
   editBudget(data: IBudget, id: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getToken().then((val: any) => {
-        this.http.post(`${this.url}/expense/budget/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+        // tslint:disable-next-line: max-line-length
+        this.http.post(`${this.url}/expense/budget/edit/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
           resolve(res.body);
         }, (err) => {
           this.sessionExpired(err);

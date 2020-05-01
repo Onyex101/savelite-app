@@ -33,21 +33,26 @@ export class SavingsPage implements OnInit {
     this.TotalTgtAmt = 0;
     this.TotalPercentage = 0;
     this.api.allPlan().then((res) => {
-      res.forEach((item) => {
-        // tslint:disable-next-line: radix
-        const amt = parseInt(item.card.amount);
-        this.TtlAmt += amt;
-        // tslint:disable-next-line: radix
-        const trgtAmt = parseInt(item.targetAmount);
-        this.TotalTgtAmt += trgtAmt;
-        item.percentage = (amt / trgtAmt) * 100;
-      });
-      this.TotalPercentage = (this.TtlAmt / this.TotalTgtAmt) * 100;
-      console.log(res);
-      this.copy = [...res];
-      this.plans = res;
-      this.plan = true;
-      this.loading = false;
+      if (res.length > 0) {
+        res.forEach((item) => {
+          // tslint:disable-next-line: radix
+          const amt = parseInt(item.card.amount);
+          this.TtlAmt += amt;
+          // tslint:disable-next-line: radix
+          const trgtAmt = parseInt(item.targetAmount);
+          this.TotalTgtAmt += trgtAmt;
+          item.percentage = (amt / trgtAmt) * 100;
+        });
+        this.TotalPercentage = (this.TtlAmt / this.TotalTgtAmt) * 100;
+        console.log(res);
+        this.copy = [...res];
+        this.plans = res;
+        this.plan = true;
+        this.loading = false;
+      } else {
+        this.plan = false;
+        this.loading = false;
+      }
     }).catch((err) => {
       console.log(err);
     });

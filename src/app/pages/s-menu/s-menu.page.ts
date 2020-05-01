@@ -21,6 +21,11 @@ export class SMenuPage implements OnInit {
       icon: 'wallet',
       path: '/s-menu/s-menu/savings'
     },
+    {
+      name: 'Settings',
+      icon: 'settings',
+      path: '/s-menu/s-menu/settings'
+    },
   ];
   user: IUser;
 

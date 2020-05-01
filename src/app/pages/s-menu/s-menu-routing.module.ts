@@ -15,7 +15,11 @@ const routes: Routes = [
       {
         path: 'savings',
         loadChildren: () => import('./savings/savings.module').then( m => m.SavingsPageModule)
-      }
+      },
+      {
+        path: 'settings',
+        loadChildren: () => import('../settings/settings.module').then( m => m.SettingsPageModule)
+      },
     ]
   },
   {
