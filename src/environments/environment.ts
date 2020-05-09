@@ -4,10 +4,11 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000',
-  IMGUR_ENDPOINT: 'https://api.imgur.com/3/upload',
+  apiUrl: 'https://savelite-api.herokuapp.com',
+  IMGUR_ENDPOINT: 'https://api.imgur.com/3/image',
   IMGUR_CLIENT_ID: '924ff8331aaf4c1',
 };
+// http://localhost:3000
 
 /*
  * For easier debugging in development mode, you can import the following file

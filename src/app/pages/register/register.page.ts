@@ -20,6 +20,9 @@ export class RegisterPage implements OnInit {
   matchingPassGroup: FormGroup;
   countries: Array<CountryPhone>;
   genders: Array<string>;
+  profileImage: any;
+  imgDelHash: any;
+  imageSet = false;
 
   errorMessage = ErrorMessages.registerError;
 
@@ -124,9 +127,11 @@ export class RegisterPage implements OnInit {
   }
 
   uploadImage(image: string) {
-    this.api.sendToImgur(image).then((res) => {
+    this.api.sendToImgur(image).then((res: any) => {
       console.log(res);
-      // this.regForm.value.profileImage = res;
+      this.profileImage = res.link;
+      this.imgDelHash = res.deletehash;
+      this.imageSet = true;
     }).catch((e) => {
       console.log(e);
     });
@@ -138,6 +143,11 @@ export class RegisterPage implements OnInit {
       backdropDismiss: false
     });
     await loading.present();
+    if (this.imageSet === true) {
+      values.profileImage = this.profileImage;
+      values.imgDelHash = this.imgDelHash;
+    }
+    console.log('register form', values);
     this.auth.register(values).then((res) => {
       console.log(res);
       this.regForm.reset();

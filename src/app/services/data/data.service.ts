@@ -11,8 +11,17 @@ export class DataService {
 
   private dataUpdatedEvent: Subject<any> = new Subject();
 
-  private budgetId = new BehaviorSubject('');
-  currentBudgetId = this.budgetId.asObservable();
+  private budget = new BehaviorSubject({
+    _id: '',
+    budgetName : '',
+    budget : 0,
+    _userID : '',
+    expenses : [],
+    images : [],
+    createdAt : '',
+    updatedAt : '',
+  });
+  currentBudget = this.budget.asObservable();
 
   constructor() {}
 
@@ -20,8 +29,8 @@ export class DataService {
     this.barData.next(data);
   }
 
-  emitBudgetIdEvent(data: string) {
-    this.budgetId.next(data);
+  emitBudgetEvent(data: any) {
+    this.budget.next(data);
   }
 
   emitDataUpdatedEvent() {

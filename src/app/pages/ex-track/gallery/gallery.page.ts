@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './../../../services/api/api.service';
-import { Camera, PictureSourceType } from '@ionic-native/camera/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { LoadingController } from '@ionic/angular';
+import { DataService } from './../../../services/data/data.service';
 
 @Component({
   selector: 'app-gallery',
@@ -9,13 +11,29 @@ import { Camera, PictureSourceType } from '@ionic-native/camera/ngx';
 })
 export class GalleryPage implements OnInit {
 
+  // loading = true;
   selectedImage = '';
+  anyImage = false;
+  budgetId: string;
+  imageList: any;
   constructor(
     private api: ApiService,
-    private camera: Camera
+    private camera: Camera,
+    private shareData: DataService,
+    public loadingController: LoadingController,
   ) { }
 
   ngOnInit() {
+    this.shareData.currentBudget.subscribe((budget) => {
+      this.budgetId = budget._id;
+      this.imageList = budget.images;
+      if (this.imageList > 0) {
+        this.anyImage = true;
+      } else {
+        this.anyImage = false;
+      }
+      console.log(budget);
+    });
   }
 
   getPicture() {
@@ -32,12 +50,26 @@ export class GalleryPage implements OnInit {
     });
   }
 
-  uploadImage(image: string) {
-    this.api.sendToImgur(image).then((res) => {
+  async uploadImage(image: string) {
+    const loading = await this.loadingController.create({
+      translucent: false,
+      backdropDismiss: false
+    });
+    await loading.present();
+    this.api.sendToImgur(image).then((res: any) => {
       console.log(res);
-      // this.regForm.value.profileImage = res;
+      this.api.postImage(res, this.budgetId).then((r) => {
+        console.log(r);
+        this.imageList = r.images;
+        this.anyImage = true;
+        loading.dismiss();
+      }).catch((e) => {
+        console.log(e);
+        loading.dismiss();
+      });
     }).catch((e) => {
       console.log(e);
+      loading.dismiss();
     });
   }
 }

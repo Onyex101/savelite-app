@@ -5,17 +5,29 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-button class="ion-float-right" class="ion-text-capitalize" (click)="selectSource()">Select Image</ion-button>
-  <ion-button class="ion-float-left" class="ion-text-capitalize" [disabled]="!selectedImage">Recognize Image</ion-button>
 
-  <img [src]="selectedImage" *ngIf="selectedImage">
+  <div class="box">
+    <div class="image">
+      <img [src]="selectedImage">
+    </div>
+  </div>
 
-  <ion-card *ngIf="imageText">
+  <progress-bar *ngIf="displayProgress" [progress]="progress" [color-degraded]="{'0': '#d19115',  '40': '#222831', '80': '#2dd36f'}">
+  </progress-bar>
+
+  <ion-card *ngIf="ocrResult" style="margin-top: 16px !important;">
     <ion-card-header>
       Image Text
     </ion-card-header>
     <ion-card-content>
-      {{ imageText }}
+      {{ ocrResult }}
     </ion-card-content>
   </ion-card>
+
+  <ion-fab *ngIf="!displayProgress" vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="selectSource()">
+      <ion-icon name="camera-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

@@ -5,6 +5,7 @@ import { environment } from './../../../environments/environment';
 import { IPlan, IBudget, Iimage, IExpense } from './../../interface/dto';
 import { Storage } from '@ionic/storage';
 import { TOKEN_KEY } from './../auth/auth.service';
+import { NavController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class ApiService {
     private http: HttpClient,
     private storage: Storage,
     private router: Router,
+    private navCtrl: NavController
   ) { }
 
   /**
@@ -194,7 +196,7 @@ export class ApiService {
   postImage(data: Iimage, id: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getToken().then((val: any) => {
-        this.http.post(`${this.url}/budget/image/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+        this.http.post(`${this.url}/expense/budget/image/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
           resolve(res.body);
         }, (err) => {
           this.sessionExpired(err);
@@ -208,7 +210,7 @@ export class ApiService {
     return new Promise((resolve, reject) => {
       this.getToken().then((val: any) => {
         // tslint:disable-next-line: max-line-length
-        this.http.delete(`${this.url}/budget/image/${bId}/${id}`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+        this.http.delete(`${this.url}/expense/budget/image/${bId}/${id}`, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
           resolve(res.body);
         }, (err) => {
           this.sessionExpired(err);
@@ -234,7 +236,7 @@ export class ApiService {
   newBudget(data: IBudget): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getToken().then((val: any) => {
-        this.http.post(`${this.url}/expense/budget/post`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+        this.http.post(`${this.url}/expense/budget`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
           resolve(res.body);
         }, (err) => {
           this.sessionExpired(err);
@@ -304,6 +306,7 @@ export class ApiService {
           authentication: 'Expired'
         }
       };
+      this.navCtrl.setDirection('root');
       this.router.navigate(['login'], navigationExtras);
     }
   }

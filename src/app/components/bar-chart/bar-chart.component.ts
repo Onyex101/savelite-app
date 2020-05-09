@@ -31,7 +31,7 @@ export class BarChartComponent implements OnInit {
     { data: [0, 0, 0, 0, 0, 0, 0], label: 'Category' }
   ];
   public barChartColors = [
-    { backgroundColor: '#222831' },
+    { backgroundColor: '#d19115' },
   ];
 
   constructor(

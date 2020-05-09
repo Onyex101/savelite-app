@@ -65,6 +65,7 @@ export interface IBudget {
 }
 
 export interface Iimage {
+    _id?: string;
     id: string;
     name: string;
     datetime: number;

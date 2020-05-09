@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
+  <!-- <ion-grid *ngIf="loading">
     <ion-row>
       <ion-col size="6">
         <div class="skeleton">
@@ -39,6 +39,20 @@
       <ion-col size="6">
         <div class="skeleton">
           <ion-skeleton-text animated style="height: 100%;"></ion-skeleton-text>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+
+  <div class="box" *ngIf="!anyImage">
+    <h3>No images currently!</h3>
+  </div>
+
+  <ion-grid *ngIf="anyImage">
+    <ion-row>
+      <ion-col size="6" *ngFor="let image of imageList">
+        <div class="skeleton">
+          <img [src]="image.link" width="100%" height="100%">
         </div>
       </ion-col>
     </ion-row>
@@ -46,7 +60,7 @@
 
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="getPicture()">
-      <ion-icon name="camera"></ion-icon>
+      <ion-icon name="camera-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

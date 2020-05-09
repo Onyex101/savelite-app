@@ -2,6 +2,7 @@ import { Router, RouterEvent, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../../services/auth/auth.service';
 import { IUser } from './../../interface/dto';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-s-menu',
@@ -28,11 +29,14 @@ export class SMenuPage implements OnInit {
     },
   ];
   user: IUser;
+  profileImage = 'assets/images/avatar1.png';
+  username = 'User Name';
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private auth: AuthService,
+    private navCtrl: NavController
   ) {
     this.router.events.subscribe((event: RouterEvent) => {
       if (event.url === '/s-menu') {
@@ -46,6 +50,12 @@ export class SMenuPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.user = this.router.getCurrentNavigation().extras.state.user;
         console.log(this.user);
+        if (this.user.profileImage) {
+          this.profileImage = this.user.profileImage;
+        }
+        if (this.user.username) {
+          this.username = this.user.username;
+        }
       }
     });
   }
@@ -55,7 +65,7 @@ export class SMenuPage implements OnInit {
 
   logout(): void {
     this.auth.logout().then(() => {
-      this.router.navigateByUrl('/login');
+      this.navCtrl.navigateRoot('/login');
     });
   }
 }

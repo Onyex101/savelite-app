@@ -105,6 +105,7 @@ export class LoginPage implements OnInit {
         }).catch((e) => {
           console.log(e);
           loading.dismiss();
+          this.presentToast(e.error.msg);
         });
       }
     });

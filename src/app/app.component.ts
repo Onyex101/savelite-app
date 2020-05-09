@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { ToastController } from '@ionic/angular';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 @Component({
   selector: 'app-root',
@@ -17,16 +18,18 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private network: Network,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private backgroundMode: BackgroundMode
   ) {
     this.initializeApp();
-    this.watchNetwork();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.watchNetwork();
+      this.backgroundMode.enable();
     });
   }
 
@@ -39,7 +42,7 @@ export class AppComponent {
           duration: 3000
         });
         toast.present();
-      }, 1000);
+      }, 2000);
     });
   }
 }

@@ -37,7 +37,8 @@ export class HomePage implements OnInit {
     public loadingController: LoadingController,
     public alertController: AlertController,
     public toastController: ToastController,
-    private storage: Storage
+    private storage: Storage,
+    private shareData: DataService
   ) {
     this.allBudgets = [];
   }
@@ -71,12 +72,16 @@ export class HomePage implements OnInit {
         console.log(this.b);
         this.budget = this.b.budget;
         this.storage.set('BudgetId', this.b._id);
+        this.shareData.emitBudgetEvent(this.b);
         this.expenseList = this.b.expenses;
         if (this.expenseList.length > 0) {
           this.anyExpense = true;
           this.calculate();
         }
         this.spinner = false;
+      } else {
+        this.spinner = false;
+        this.anyExpense = false;
       }
       this.allBudgets = res;
     } catch (err) {
@@ -114,6 +119,7 @@ export class HomePage implements OnInit {
         });
         await loading.present();
         this.apiService.newBudget(result).then((res) => {
+          console.log(res);
           if (res.msg) {
             this.presentToast(res.msg.message);
           } else {
@@ -125,6 +131,7 @@ export class HomePage implements OnInit {
             });
             this.budget = this.b.budget;
             this.storage.set('BudgetId', this.b._id);
+            this.shareData.emitBudgetEvent(this.b);
             this.expenseList = this.b.expenses;
             if (this.expenseList.length > 0) {
               this.anyExpense = true;
@@ -133,7 +140,6 @@ export class HomePage implements OnInit {
               this.anyExpense = false;
             }
           }
-          console.log(res);
           loading.dismiss();
         }).catch((err) => {
           console.log(err);
@@ -271,6 +277,7 @@ export class HomePage implements OnInit {
     console.log(this.b);
     this.budget = this.b.budget;
     this.storage.set('BudgetId', this.b._id);
+    this.shareData.emitBudgetEvent(this.b);
     this.expenseList = this.b.expenses;
     if (this.expenseList.length > 0) {
       this.calculate();
