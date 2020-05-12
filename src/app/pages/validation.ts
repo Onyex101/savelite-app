@@ -173,8 +173,8 @@ export const ErrorMessages = {
     ],
     cvv: [
       { type: 'required', message: 'card cvv is required.' },
-      { type: 'min', message: 'cvv cannot be less than 4 characters long.' },
-      { type: 'max', message: 'cvv cannot be more than 4 characters long.' },
+      { type: 'min', message: 'cvv cannot be less than 3 characters long.' },
+      { type: 'max', message: 'cvv cannot be more than 3 characters long.' },
     ],
     pin: [
       { type: 'required', message: 'card pin is required.' },

@@ -1,8 +1,10 @@
+import { Iimage } from './../../../interface/dto';
 import { Component, OnInit } from '@angular/core';
+import { ModalController, LoadingController } from '@ionic/angular';
 import { ApiService } from './../../../services/api/api.service';
 import { Camera } from '@ionic-native/camera/ngx';
-import { LoadingController } from '@ionic/angular';
 import { DataService } from './../../../services/data/data.service';
+import { ImageComponent } from './../../../components/image/image.component';
 
 @Component({
   selector: 'app-gallery',
@@ -15,30 +17,39 @@ export class GalleryPage implements OnInit {
   selectedImage = '';
   anyImage = false;
   budgetId: string;
-  imageList: any;
+  imageList: Iimage[];
+  deleteToggle = false;
+  imageCopy: any;
+
   constructor(
     private api: ApiService,
     private camera: Camera,
     private shareData: DataService,
+    public modalController: ModalController,
     public loadingController: LoadingController,
   ) { }
 
   ngOnInit() {
     this.shareData.currentBudget.subscribe((budget) => {
+      this.imageList = [];
       this.budgetId = budget._id;
-      this.imageList = budget.images;
-      if (this.imageList > 0) {
+      if (budget.images.length > 0) {
+        budget.images.forEach((img) => {
+          img.select = false;
+        });
         this.anyImage = true;
+        this.imageList = budget.images;
+        this.imageCopy = JSON.parse(JSON.stringify(this.imageList));
       } else {
         this.anyImage = false;
       }
-      console.log(budget);
+      // console.log('budget page', this.imageList);
     });
   }
 
   getPicture() {
     this.camera.getPicture({
-      quality: 100,
+      quality: 60,
       destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: this.camera.PictureSourceType.CAMERA,
       allowEdit: true,
@@ -57,19 +68,55 @@ export class GalleryPage implements OnInit {
     });
     await loading.present();
     this.api.sendToImgur(image).then((res: any) => {
-      console.log(res);
       this.api.postImage(res, this.budgetId).then((r) => {
-        console.log(r);
-        this.imageList = r.images;
-        this.anyImage = true;
+        // console.log(r);
+        this.shareData.emitBudgetEvent(r);
         loading.dismiss();
       }).catch((e) => {
-        console.log(e);
+        // console.log(e);
         loading.dismiss();
       });
     }).catch((e) => {
-      console.log(e);
+      // console.log(e);
       loading.dismiss();
     });
+  }
+
+  toggle() {
+    this.deleteToggle = !this.deleteToggle;
+    // this.imageList = [...this.imageCopy];
+  }
+
+  selectImage(img: any) {
+    this.imageList.forEach((i) => {
+      if (i._id === img._id) {
+        i.select = !i.select;
+      }
+    });
+  }
+
+  deleteImages() {
+    this.imageList.forEach(async (image) => {
+      if (image.select === true) {
+        try {
+          await this.api.deleteImgurImage(image.deletehash);
+          const res = await this.api.deleteImage(this.budgetId, image._id);
+          // console.log(res);
+          this.shareData.emitBudgetEvent(res);
+        } catch (error) {
+          // console.log(error);
+        }
+      }
+    });
+  }
+
+  async viewImage(img: Iimage) {
+    const modal = await this.modalController.create({
+      component: ImageComponent,
+      componentProps: {
+        image: img.link
+      }
+    });
+    await modal.present();
   }
 }

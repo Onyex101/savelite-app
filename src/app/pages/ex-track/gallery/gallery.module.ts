@@ -7,13 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { GalleryPageRoutingModule } from './gallery-routing.module';
 
 import { GalleryPage } from './gallery.page';
+import { ComponentsModule } from './../../../components/components.module';
+import { ImageComponent } from './../../../components/image/image.component';
 
 @NgModule({
+  entryComponents: [ImageComponent],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    GalleryPageRoutingModule
+    GalleryPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [GalleryPage]
 })

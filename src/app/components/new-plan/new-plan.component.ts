@@ -77,8 +77,8 @@ export class NewPlanComponent implements OnInit {
       ])],
       cvv: ['', Validators.compose([
         Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(4)
+        Validators.minLength(3),
+        Validators.maxLength(3)
       ])],
       pin: ['', Validators.compose([
         Validators.required,

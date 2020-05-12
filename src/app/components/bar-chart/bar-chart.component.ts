@@ -24,7 +24,7 @@ export class BarChartComponent implements OnInit {
   };
   public barChartLabels: Label[] = ['Health', 'Food', 'Education', 'Transport', 'Entertainment', 'Shopping', 'Others'];
   public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
+  public barChartLegend = false;
   public barChartPlugins = [pluginDataLabels];
 
   public barChartData: ChartDataSets[] = [

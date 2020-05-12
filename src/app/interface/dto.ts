@@ -75,4 +75,5 @@ export interface Iimage {
     size: number;
     deletehash: string;
     link: string;
+    select?: boolean;
 }

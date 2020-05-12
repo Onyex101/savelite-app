@@ -1,4 +1,3 @@
-import { AddExpenseComponent } from './add-expense/add-expense.component';
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,6 +13,8 @@ import { DetailsComponent } from './details/details.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { NewPlanComponent } from './new-plan/new-plan.component';
 import { PlanDetailComponent } from './plan-detail/plan-detail.component';
+import { ImageComponent } from './image/image.component';
+import { AddExpenseComponent } from './add-expense/add-expense.component';
 
 // plugins
 import 'chartjs-plugin-zoom';
@@ -32,7 +33,8 @@ import { DataService } from './../services/data/data.service';
     ForgotPasswordComponent,
     NewPlanComponent,
     PlanDetailComponent,
-    AddExpenseComponent
+    AddExpenseComponent,
+    ImageComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +53,8 @@ import { DataService } from './../services/data/data.service';
     ForgotPasswordComponent,
     NewPlanComponent,
     PlanDetailComponent,
-    AddExpenseComponent
+    AddExpenseComponent,
+    ImageComponent
   ],
   providers: [DataService]
 })

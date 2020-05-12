@@ -1,14 +1,13 @@
 .box {
-    margin-top: 12px;
-    margin-bottom: 8px;
+    margin-top: 6px;
     width: 100%;
     display: flex;
     justify-content: center;
     .image {
-        padding: 8px;
-        border-radius: 12px;
-        box-shadow: 8px 8px 16px #a7b4b4,
-                -8px -8px 16px #ffffff;
+        padding: 4px;
+        border-radius: 6px;
+        box-shadow: 4px 4px 8px #a7b4b4,
+                -4px -4px 8px #ffffff;
     }
     img {
         width: 250px;

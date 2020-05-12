@@ -1,6 +1,11 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="toolbar">
     <ion-title>Gallery</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggle()">
+        <ion-icon slot="icon-only" [name]="deleteToggle ? 'checkbox' : 'checkbox-outline'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -50,17 +55,30 @@
 
   <ion-grid *ngIf="anyImage">
     <ion-row>
-      <ion-col size="6" *ngFor="let image of imageList">
-        <div class="skeleton">
+      <ion-col size="4" *ngFor="let image of imageList">
+        <div class="skeleton" [class.opaque]="deleteToggle" (click)="viewImage(image)">
+          <div class="icon" *ngIf="deleteToggle">
+            <ion-button (click)="selectImage(image)">
+              <ion-icon slot="icon-only" size="large"
+                [name]="image.select ? 'checkmark-circle' : 'checkmark-circle-outline'"></ion-icon>
+            </ion-button>
+          </div>
           <img [src]="image.link" width="100%" height="100%">
         </div>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <ion-fab *ngIf="!deleteToggle" vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="getPicture()">
       <ion-icon name="camera-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+
+<!-- Footer without a border -->
+<ion-footer class="ion-no-border" *ngIf="deleteToggle">
+  <ion-button expand="block" color="primary" (click)="deleteImages()">
+    Delete
+  </ion-button>
+</ion-footer>

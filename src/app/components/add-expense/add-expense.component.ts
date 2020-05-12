@@ -26,7 +26,7 @@ export class AddExpenseComponent implements OnInit {
     private modalCtrl: ModalController,
   ) {
     this.categories = ['Health', 'Food', 'Education', 'Transport', 'Entertainment', 'Shopping', 'Others'];
-    this.budgetId = navParams.get('id');
+    this.budgetId = this.navParams.get('id');
   }
 
   ngOnInit() {
