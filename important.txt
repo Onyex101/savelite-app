@@ -8,3 +8,12 @@ https://apidocs.imgur.com/?version=latest#c85c9dfc-7487-4de2-9ecd-66f727cf3139
 Uploadcare
 Cloudinary
 FileStack
+
+prevent app from sleeping
+https://cron-job.org/en/
+
+"C:\Users\Okoye Onyekachi\Documents\ionic\savelite\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk"
+
+Jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore savelite.keystore "C:\Users\Okoye Onyekachi\Documents\ionic\savelite\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" savelite
+
+Zipalign -v 4 "C:\Users\Okoye Onyekachi\Documents\ionic\savelite\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" savelite.apk

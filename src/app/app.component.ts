@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { ToastController } from '@ionic/angular';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { Storage } from '@ionic/storage';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +21,9 @@ export class AppComponent {
     private statusBar: StatusBar,
     private network: Network,
     public toastController: ToastController,
-    private backgroundMode: BackgroundMode
+    private backgroundMode: BackgroundMode,
+    private fcm: FCM,
+    private storage: Storage
   ) {
     this.initializeApp();
   }
@@ -28,21 +32,45 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.watchNetwork();
-      this.backgroundMode.enable();
-    });
-  }
+      this.fcm.getToken().then(token => {
+        console.log(token);
+        this.storage.set('FIREBASE_TOKEN', token);
+      });
 
-  watchNetwork() {
-    this.network.onDisconnect().subscribe(() => {
-      console.log('network disconnected');
-      setTimeout(async () => {
-        const toast = await this.toastController.create({
-          message: 'Network disconnected.',
-          duration: 3000
-        });
-        toast.present();
-      }, 2000);
+      // ionic push notification example
+      this.fcm.onNotification().subscribe(data => {
+        console.log(data);
+        if (data.wasTapped) {
+          console.log('Received in background');
+        } else {
+          console.log('Received in foreground');
+        }
+      });
+
+      // refresh the FCM token
+      this.fcm.onTokenRefresh().subscribe(token => {
+        console.log(token);
+        this.storage.set('FIREBASE_TOKEN', token);
+      });
+
+      // unsubscribe from a topic
+      // this.fcm.unsubscribeFromTopic('offers');
+
     });
-  }
+    this.watchNetwork();
+    this.backgroundMode.enable();
+}
+
+watchNetwork() {
+  this.network.onDisconnect().subscribe(() => {
+    console.log('network disconnected');
+    setTimeout(async () => {
+      const toast = await this.toastController.create({
+        message: 'Network disconnected.',
+        duration: 3000
+      });
+      toast.present();
+    }, 2000);
+  });
+}
 }

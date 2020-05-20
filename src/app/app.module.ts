@@ -20,6 +20,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,11 +39,13 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
     StatusBar,
     SplashScreen,
     Camera,
+    FCM,
     Network,
     JwtHelperService,
     ApiService,
     AuthService,
     BackgroundMode,
+    LocalNotifications,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]

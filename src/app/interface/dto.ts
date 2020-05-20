@@ -3,6 +3,10 @@ export interface ILogin {
     password: string;
 }
 
+export interface IToken {
+    token: string;
+}
+
 export interface IUser {
     id: string;
     fullname: string;
@@ -10,6 +14,7 @@ export interface IUser {
     email: string;
     phone_no: string;
     profileImage?: string;
+    firebaseToken?: string;
 }
 
 export interface IReg {

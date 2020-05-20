@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "397828101689",
+    "firebase_url": "https://savelite-c8f57.firebaseio.com",
+    "project_id": "savelite-c8f57",
+    "storage_bucket": "savelite-c8f57.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397828101689:android:6879b34cd7f12d3b7ddfe8",
+        "android_client_info": {
+          "package_name": "io.yeks.savelite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397828101689-slqjd0qq0omek8pfc5h8ema2ijbln7h8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEs1NLP7N2NeBbBdOGqWs31nqifgPW6zg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397828101689-slqjd0qq0omek8pfc5h8ema2ijbln7h8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
