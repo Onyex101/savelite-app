@@ -18,6 +18,7 @@ import {
   MatSortModule,
   MatNativeDateModule
 } from '@angular/material';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 @NgModule({
   declarations: [],
@@ -40,7 +41,8 @@ import {
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatGridListModule
+    MatGridListModule,
+    MatBottomSheetModule
   ]
 })
 export class MaterialModule { }

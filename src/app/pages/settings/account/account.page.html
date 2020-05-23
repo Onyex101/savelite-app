@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+<div class="profile">
+  <div class="content">
+    <ion-avatar>
+      <img [src]="user.profileImage || profileImage">
+    </ion-avatar>
+    <div class="button ion-activatable ripple-parent" (click)=selectSource()>
+      <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+      <ion-ripple-effect></ion-ripple-effect>
+    </div>
+  </div>
+</div>
+
+<ion-item button (click)="openBottomSheet('username', user.username)">
+  <ion-icon name="happy-outline" slot="start"></ion-icon>
+  <ion-label>
+    <p>Username</p>
+    <h2>{{user.username}}</h2>
+  </ion-label>
+  <ion-icon name="pencil-outline" slot="end"></ion-icon>
+</ion-item>
+
+<ion-item button (click)="openBottomSheet('fullname', user.fullname)">
+  <ion-icon name="person-outline" slot="start"></ion-icon>
+  <ion-label>
+    <p>Name</p>
+    <h2>{{user.fullname}}</h2>
+  </ion-label>
+  <ion-icon name="pencil-outline" slot="end"></ion-icon>
+</ion-item>
+
+<ion-item button (click)="openBottomSheet('phone_no', user.phone_no)">
+  <ion-icon name="call-outline" slot="start"></ion-icon>
+  <ion-label>
+    <p>Phone</p>
+    <h2>{{user.phone_no}}</h2>
+  </ion-label>
+  <ion-icon name="pencil-outline" slot="end"></ion-icon>
+</ion-item>
+
+</ion-content>

@@ -31,6 +31,14 @@
             </ion-label>
           </ion-item>
         </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item lines="none" class="ion-text-center" (click)="settings()" routerDirection="root" [class.active-menu]="activePath === '/s-menu/s-menu/settings'">
+            <ion-icon name="settings" slot="start"></ion-icon>
+            <ion-label>
+              Settings
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
         <ion-item lines="none" class="ion-text-center" (click)="logout()">
           <ion-icon name="power" slot="start"></ion-icon>
           <ion-label>

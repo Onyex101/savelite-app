@@ -2,7 +2,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
-import { IPlan, IBudget, Iimage, IExpense } from './../../interface/dto';
+import { IPlan, IBudget, Iimage, IExpense, IToken } from './../../interface/dto';
 import { Storage } from '@ionic/storage';
 import { TOKEN_KEY } from './../auth/auth.service';
 import { NavController } from '@ionic/angular';
@@ -42,6 +42,24 @@ export class ApiService {
     return new Promise((resolve, reject) => {
       this.storage.get(TOKEN_KEY).then((val) => {
         resolve(val);
+      });
+    });
+  }
+
+  /**
+   * sends the firebase token to the api to be saved in the
+   * database
+   * @param data token object
+   */
+  sendToken(data: IToken): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getToken().then((val: any) => {
+        this.http.post(`${this.url}/user/token`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          this.sessionExpired(err);
+          reject(err);
+        });
       });
     });
   }
@@ -193,10 +211,24 @@ export class ApiService {
     });
   }
 
+  updateProfileImage(data: any) {
+    return new Promise((resolve, reject) => {
+      this.getToken().then((val: any) => {
+        this.http.post(`${this.url}/user/image`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          this.sessionExpired(err);
+          reject(err);
+        });
+      });
+    });
+  }
+
   postImage(data: Iimage, id: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getToken().then((val: any) => {
-        this.http.post(`${this.url}/expense/budget/image/${id}`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+        this.http.post(`${this.url}/expense/budget/image/${id}`, data, { headers: this.addHeader(val), observe: 'response' })
+        .subscribe((res) => {
           resolve(res.body);
         }, (err) => {
           this.sessionExpired(err);

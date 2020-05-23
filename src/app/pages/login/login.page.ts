@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from './../../services/auth/auth.service';
 import { ForgotPasswordComponent } from './../../components/forgot-password/forgot-password.component';
 import { Storage } from '@ionic/storage';
+import { ApiService } from './../../services/api/api.service';
 import { ErrorMessages } from './../validation';
 import { IUser } from './../../interface/dto';
 
@@ -29,6 +30,7 @@ export class LoginPage implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private auth: AuthService,
+    private api: ApiService,
     private storage: Storage
   ) {
     this.route.queryParams.subscribe(() => {
@@ -70,10 +72,10 @@ export class LoginPage implements OnInit {
       try {
         const res: IUser = await this.auth.login(this.loginForm.value);
         const token = await this.storage.get('FIREBASE_TOKEN');
-        if ((res.firebaseToken === 'token') || (res.firebaseToken !== token)) {
-          const t = await this.auth.sendToken({token});
-          console.log('token sent to api', t);
-        }
+        // if ((res.firebaseToken === 'token') || (res.firebaseToken !== token)) {
+        //   const t = await this.api.sendToken({token});
+        //   console.log('token sent to api', t);
+        // }
         this.loginForm.reset();
         loading.dismiss();
         const navExtras: NavigationExtras = {

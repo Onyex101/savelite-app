@@ -1,3 +1,4 @@
+import { MenuShareModule } from './menu.share.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +15,7 @@ import { SMenuPage } from './s-menu.page';
     FormsModule,
     IonicModule,
     SMenuPageRoutingModule,
+    MenuShareModule.forRoot(),
   ],
   declarations: [SMenuPage]
 })

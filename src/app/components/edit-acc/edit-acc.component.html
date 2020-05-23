@@ -1,0 +1,21 @@
+<div class="container">
+  <mat-form-field    *ngIf="data.type === 'fullname'" class="field">
+    <mat-label>Name</mat-label>
+    <input matInput type='text' [(ngModel)]="data.input" cdkFocusInitial>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.type === 'username'" class="field">
+    <mat-label>Username</mat-label>
+    <input matInput type='text' [(ngModel)]="data.input" cdkFocusInitial>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.type === 'phone_no'" class="field">
+    <mat-label>Phone</mat-label>
+    <input matInput type='number' inputmode="numeric" [(ngModel)]="data.input" cdkFocusInitial>
+  </mat-form-field>
+
+  <div class="row">
+    <button mat-button (click)="dismiss()">Cancel</button>
+    <button mat-button (click)="save()">Save</button>
+  </div>
+</div>

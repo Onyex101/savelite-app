@@ -15,6 +15,7 @@ import { NewPlanComponent } from './new-plan/new-plan.component';
 import { PlanDetailComponent } from './plan-detail/plan-detail.component';
 import { ImageComponent } from './image/image.component';
 import { AddExpenseComponent } from './add-expense/add-expense.component';
+import { EditAccComponent } from './edit-acc/edit-acc.component';
 
 // plugins
 import 'chartjs-plugin-zoom';
@@ -34,7 +35,8 @@ import { DataService } from './../services/data/data.service';
     NewPlanComponent,
     PlanDetailComponent,
     AddExpenseComponent,
-    ImageComponent
+    ImageComponent,
+    EditAccComponent,
   ],
   imports: [
     CommonModule,
@@ -54,7 +56,8 @@ import { DataService } from './../services/data/data.service';
     NewPlanComponent,
     PlanDetailComponent,
     AddExpenseComponent,
-    ImageComponent
+    ImageComponent,
+    EditAccComponent
   ],
   providers: [DataService]
 })

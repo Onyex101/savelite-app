@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    padding-top: 16px;
+    flex-direction: column;
+    align-items: center;
+    .mat-form-field-appearance-legacy .mat-form-field-infix {
+        width: 100% !important;
+    }
+    .row {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding: 8px;
+        justify-content: flex-end;
+    }
+}

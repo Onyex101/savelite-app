@@ -17,3 +17,12 @@ https://cron-job.org/en/
 Jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore savelite.keystore "C:\Users\Okoye Onyekachi\Documents\ionic\savelite\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" savelite
 
 Zipalign -v 4 "C:\Users\Okoye Onyekachi\Documents\ionic\savelite\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" savelite.apk
+
+
+https://www.joshmorony.com/using-ngrx-for-state-management-in-an-ionic-angular-application/
+
+https://www.joshmorony.com/building-a-notepad-application-from-scratch-with-ionic/
+
+https://levelup.gitconnected.com/angular-ngrx-a-clean-and-clear-introduction-4ed61c89c1fc
+
+https://dzone.com/articles/angular-app-state-management-with-ngrx

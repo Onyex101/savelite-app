@@ -14,6 +14,7 @@ export interface IUser {
     email: string;
     phone_no: string;
     profileImage?: string;
+    imageDeleteHash?: string;
     firebaseToken?: string;
 }
 

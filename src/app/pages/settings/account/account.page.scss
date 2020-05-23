@@ -1,0 +1,46 @@
+ion-content {
+    .profile {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+    .ripple-parent {
+        position: relative;
+        overflow: hidden;
+    }
+    ion-avatar {
+        width: 150px;
+        height: 150px;
+        background: linear-gradient(145deg, #ffffff, #dcdddf);
+        box-shadow: 12px 12px 24px #cfd0d3,
+            -12px -12px 24px #ffffff;
+    }
+
+    .content {
+        position: relative;
+        padding: 8px;
+        margin-bottom: 16px;
+    }
+
+    .button {
+        width: fit-content;
+        padding: 12px;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(145deg, #ffffff, #dcdddf);
+        box-shadow: 12px 12px 24px #cfd0d3;
+
+        ion-icon {
+            font-size: 24px;
+        }
+    }
+    ion-item {
+        margin-top: 16px;
+        border-radius: 10px;
+        --background: #f4f5f8;
+        box-shadow: 8px 8px 16px #cfd0d3,
+            -8px -8px 16px #ffffff;
+    }
+}

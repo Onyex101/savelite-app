@@ -22,6 +22,7 @@ import { Network } from '@ionic-native/network/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { NotificationService } from './services/notification/notification.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,6 +47,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
     AuthService,
     BackgroundMode,
     LocalNotifications,
+    NotificationService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]

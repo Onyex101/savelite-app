@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../../services/auth/auth.service';
 import { IUser } from './../../interface/dto';
 import { NavController } from '@ionic/angular';
+import { MenuDataService } from './../../services/data/menu.data.service';
 
 @Component({
   selector: 'app-s-menu',
@@ -22,11 +23,11 @@ export class SMenuPage implements OnInit {
       icon: 'wallet',
       path: '/s-menu/s-menu/savings'
     },
-    {
-      name: 'Settings',
-      icon: 'settings',
-      path: '/s-menu/s-menu/settings'
-    },
+    // {
+    //   name: 'Settings',
+    //   icon: 'settings',
+    //   path: '/s-menu/s-menu/settings'
+    // },
   ];
   user: IUser;
   profileImage = 'assets/images/avatar1.png';
@@ -36,7 +37,8 @@ export class SMenuPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private auth: AuthService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private userData: MenuDataService
   ) {
     this.router.events.subscribe((event: RouterEvent) => {
       if (event.url === '/s-menu') {
@@ -49,7 +51,7 @@ export class SMenuPage implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.user = this.router.getCurrentNavigation().extras.state.user;
-        console.log(this.user);
+        this.userData.emitUserEvent(this.user);
         if (this.user.profileImage) {
           this.profileImage = this.user.profileImage;
         }
@@ -61,6 +63,13 @@ export class SMenuPage implements OnInit {
   }
 
   ngOnInit() {
+    this.userData.currentUserDetails.subscribe((user) => {
+      this.user = user;
+    });
+  }
+
+  settings() {
+    this.router.navigateByUrl('/s-menu/s-menu/settings');
   }
 
   logout(): void {
