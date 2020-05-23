@@ -4,7 +4,7 @@ import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { Camera, PictureSourceType } from '@ionic-native/camera/ngx';
 import { ApiService } from './../../../services/api/api.service';
 import { MenuDataService } from './../../../services/data/menu.data.service';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { EditAccComponent } from './../../../components/edit-acc/edit-acc.component';
 
 @Component({
@@ -93,6 +93,7 @@ export class AccountPage implements OnInit {
       await this.api.deleteImgurImage(this.user.imageDeleteHash);
       const imgDetails = await this.api.sendToImgur(this.profileImage);
       const res = this.api.updateProfileImage(imgDetails);
+      this.userData.emitUserEvent(res);
       console.log(res);
       loading.dismiss();
     } catch (error) {
@@ -103,10 +104,19 @@ export class AccountPage implements OnInit {
 
   openBottomSheet(field: string, data: string | number): void {
     const bottomSheetRef = this._bottomSheet.open(EditAccComponent, {
-      data: {input: data, type: field}
+      data: { input: data, type: field }
     });
-    bottomSheetRef.afterDismissed().subscribe((res) => {
+    bottomSheetRef.afterDismissed().subscribe(async (res) => {
       console.log('dismissed.', res);
+      if (res !== undefined) {
+        try {
+          const newInfo = await this.api.updateProfile(res);
+          console.log('new info', newInfo);
+          this.userData.emitUserEvent(newInfo);
+        } catch (error) {
+          console.log(error);
+        }
+      }
     });
   }
 }

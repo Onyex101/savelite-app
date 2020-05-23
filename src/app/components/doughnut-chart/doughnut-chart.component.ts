@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from './../../services/data/data.service';
 import { ChartType } from 'chart.js';
 import { MultiDataSet, Label } from 'ng2-charts';
 
@@ -10,15 +11,21 @@ import { MultiDataSet, Label } from 'ng2-charts';
 export class DoughnutChartComponent implements OnInit {
 
   // Doughnut
-  public doughnutChartLabels: Label[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
+  public doughnutChartLabels: Label[] = ['Health', 'Food', 'Education', 'Transport', 'Entertainment', 'Shopping', 'Others'];
   public doughnutChartData: MultiDataSet = [
-    [350, 450, 100],
+    [0, 0, 0, 0, 0, 0, 0],
   ];
   public doughnutChartType: ChartType = 'doughnut';
 
-  constructor() { }
+  constructor(
+    private share: DataService
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.share.currentbarData.subscribe((data) => {
+      this.doughnutChartData[0] = data;
+    });
+  }
 
   // events
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {

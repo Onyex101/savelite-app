@@ -2,7 +2,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
-import { IPlan, IBudget, Iimage, IExpense, IToken } from './../../interface/dto';
+import { IPlan, IBudget, Iimage, IExpense, IToken, IUpdateUser } from './../../interface/dto';
 import { Storage } from '@ionic/storage';
 import { TOKEN_KEY } from './../auth/auth.service';
 import { NavController } from '@ionic/angular';
@@ -55,6 +55,25 @@ export class ApiService {
     return new Promise((resolve, reject) => {
       this.getToken().then((val: any) => {
         this.http.post(`${this.url}/user/token`, data, { headers: this.addHeader(val), observe: 'response' }).subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          this.sessionExpired(err);
+          reject(err);
+        });
+      });
+    });
+  }
+
+  /**
+   * update user profile info such as fullname,
+   * username and phone number
+   * @param data update parameters
+   */
+  updateProfile(data: IUpdateUser): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getToken().then((val: any) => {
+        this.http.post(`${this.url}/user/update`, data, { headers: this.addHeader(val), observe: 'response' })
+        .subscribe((res) => {
           resolve(res.body);
         }, (err) => {
           this.sessionExpired(err);
@@ -237,6 +256,7 @@ export class ApiService {
       });
     });
   }
+
 
   deleteImage(bId: string, id: string): Promise<any> {
     return new Promise((resolve, reject) => {

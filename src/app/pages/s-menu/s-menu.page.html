@@ -8,13 +8,13 @@
               <ion-col size="4">
                 <div class="box">
                   <ion-avatar>
-                    <img [src]="profileImage">
+                    <img [src]="user.profileImage || profileImage">
                   </ion-avatar>
                 </div>
               </ion-col>
               <ion-col size="8">
                 <div class="box" style="margin-left: 4px;">
-                  <ion-label>{{username}}</ion-label>
+                  <ion-label>{{user.username}}</ion-label>
                 </div>
               </ion-col>
             </ion-row>

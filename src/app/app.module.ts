@@ -23,6 +23,7 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { NotificationService } from './services/notification/notification.service';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,6 +43,7 @@ import { NotificationService } from './services/notification/notification.servic
     Camera,
     FCM,
     Network,
+    AppVersion,
     JwtHelperService,
     ApiService,
     AuthService,

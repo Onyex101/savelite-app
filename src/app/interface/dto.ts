@@ -83,3 +83,8 @@ export interface Iimage {
     link: string;
     select?: boolean;
 }
+
+export interface IUpdateUser {
+    type: string;
+    input: string | number;
+}

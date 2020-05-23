@@ -15,10 +15,12 @@
 
   <ion-item>
     <ion-label>Chart Display</ion-label>
-    <ion-select value="bar" okText="Okay" cancelText="Dismiss" interface="popover">
+    <ion-select okText="Okay" cancelText="Dismiss" interface="popover" [(ngModel)]="chart"
+      (ngModelChange)="updateChart()">
       <ion-select-option value="bar">Bar Chart</ion-select-option>
       <ion-select-option value="doughnut">Doughnut Chart</ion-select-option>
       <ion-select-option value="pie">Pie Chart</ion-select-option>
     </ion-select>
   </ion-item>
+
 </ion-content>

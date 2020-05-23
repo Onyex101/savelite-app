@@ -4,6 +4,7 @@ import { ModalController, AlertController, LoadingController, ToastController } 
 import { BudgetModalComponent } from './../../../components/budget-modal/budget-modal.component';
 import { DetailsComponent } from './../../../components/details/details.component';
 import { DataService } from './../../../services/data/data.service';
+import { MenuDataService } from './../../../services/data/menu.data.service';
 import { IBudget, IExpense } from './../../../interface/dto';
 import { ApiService } from './../../../services/api/api.service';
 import { AddExpenseComponent } from './../../../components/add-expense/add-expense.component';
@@ -25,22 +26,25 @@ export class HomePage implements OnInit {
   expense = 0;
   balance = 0;
   expenseList: IExpense[];
-  chart: Array<[string, any]>;
+  chart: string;
   storageId: string;
 
   constructor(
     public dialog: MatDialog,
     private apiService: ApiService,
-    public share: DataService,
     public mainShare: DataService,
     public modalController: ModalController,
     public loadingController: LoadingController,
     public alertController: AlertController,
     public toastController: ToastController,
     private storage: Storage,
-    private shareData: DataService
+    private shareData: DataService,
+    private menuData: MenuDataService,
   ) {
     this.allBudgets = [];
+    this.storage.get('chartTYPE').then((res) => {
+      this.chart = res;
+    });
   }
 
   async ngOnInit() {
@@ -51,6 +55,10 @@ export class HomePage implements OnInit {
     } else {
       await this.getBudgets(true);
     }
+    this.menuData.currentChartType.subscribe((res) => {
+      this.chart = res;
+      console.log('chart update', this.chart);
+    });
   }
 
   async getBudgets(Id?: boolean) {

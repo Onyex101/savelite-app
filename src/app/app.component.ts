@@ -59,18 +59,31 @@ export class AppComponent {
     });
     this.watchNetwork();
     this.backgroundMode.enable();
-}
+    this.checkChart();
+  }
 
-watchNetwork() {
-  this.network.onDisconnect().subscribe(() => {
-    console.log('network disconnected');
-    setTimeout(async () => {
-      const toast = await this.toastController.create({
-        message: 'Network disconnected.',
-        duration: 3000
-      });
-      toast.present();
-    }, 2000);
-  });
-}
+  watchNetwork() {
+    this.network.onDisconnect().subscribe(() => {
+      console.log('network disconnected');
+      setTimeout(async () => {
+        const toast = await this.toastController.create({
+          message: 'Network disconnected.',
+          duration: 3000
+        });
+        toast.present();
+      }, 2000);
+    });
+  }
+
+  /**
+   * sets default chart type as barChart for
+   * first time users
+   */
+  checkChart() {
+    this.storage.get('chartTYPE').then((res) => {
+      if (res === null) {
+        this.storage.set('chartTYPE', 'bar');
+      }
+    });
+  }
 }

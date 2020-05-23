@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from './../../services/data/data.service';
 import { ChartType, ChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
@@ -25,8 +26,8 @@ export class PieChartComponent implements OnInit {
       },
     }
   };
-  public pieChartLabels: Label[] = [['Download', 'Sales'], ['In', 'Store', 'Sales'], 'Mail Sales'];
-  public pieChartData: number[] = [300, 500, 100];
+  public pieChartLabels: Label[] = ['Health', 'Food', 'Education', 'Transport', 'Entertainment', 'Shopping', 'Others'];
+  public pieChartData: number[] = [0, 0, 0, 0, 0, 0, 0];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [pluginDataLabels];
@@ -35,9 +36,15 @@ export class PieChartComponent implements OnInit {
       backgroundColor: ['rgba(255,0,0,0.3)', 'rgba(0,255,0,0.3)', 'rgba(0,0,255,0.3)'],
     },
   ];
-  constructor() { }
+  constructor(
+    private share: DataService
+  ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.share.currentbarData.subscribe((data) => {
+      this.pieChartData = data;
+    });
+  }
 
   // events
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {

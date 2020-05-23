@@ -23,7 +23,7 @@ export class DataService {
   });
   currentBudget = this.budget.asObservable();
 
-  constructor() {}
+  constructor() { }
 
   changeData(data: any) {
     this.barData.next(data);

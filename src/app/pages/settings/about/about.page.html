@@ -7,6 +7,45 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label class="ion-text-center">
+      <h2>{{appName || 'Savelite'}}</h2>
+    </ion-label>
+  </ion-item>
 
+  <ion-item>
+    <ion-label class="ion-text-center">
+      <h2>{{versionNumber || '0.0.1'}}</h2>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="ion-text-center">
+      <h2>{{description}}</h2>
+    </ion-label>
+  </ion-item>
+
+  <div class="text ion-text-center">
+    <h2>Developers</h2>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="container">
+          <img src="assets/images/avatar1.png">
+          <h3 class="ion-text-center">Okoye Onyekachi</h3>
+          <p class="ion-text-center">Mobile Application Developer</p>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="container">
+          <img src="assets/images/avatar1.png">
+          <h3 class="ion-text-center">Mooreoluwa Babatunde</h3>
+          <p class="ion-text-center">Writer/Content Creator</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

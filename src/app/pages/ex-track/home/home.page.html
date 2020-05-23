@@ -60,7 +60,9 @@
     <div *ngIf="anyExpense">
       <!-- <app-doughnut-chart></app-doughnut-chart> -->
       <div class="chart">
-        <app-bar-chart></app-bar-chart>
+        <app-bar-chart *ngIf="chart === 'bar'"></app-bar-chart>
+        <app-doughnut-chart *ngIf="chart === 'doughnut'"></app-doughnut-chart>
+        <app-pie-chart *ngIf="chart === 'pie'"></app-pie-chart>
       </div>
       <!-- <app-pie-chart></app-pie-chart> -->
       <div class="list">

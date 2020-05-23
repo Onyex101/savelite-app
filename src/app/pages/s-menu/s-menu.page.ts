@@ -31,7 +31,6 @@ export class SMenuPage implements OnInit {
   ];
   user: IUser;
   profileImage = 'assets/images/avatar1.png';
-  username = 'User Name';
 
   constructor(
     private router: Router,
@@ -52,12 +51,6 @@ export class SMenuPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.user = this.router.getCurrentNavigation().extras.state.user;
         this.userData.emitUserEvent(this.user);
-        if (this.user.profileImage) {
-          this.profileImage = this.user.profileImage;
-        }
-        if (this.user.username) {
-          this.username = this.user.username;
-        }
       }
     });
   }

@@ -8,6 +8,7 @@ import { MenuDataService } from './../../../services/data/menu.data.service';
 })
 export class NotificationsPage implements OnInit {
   notification = true;
+  email = true;
   constructor(
     private userData: MenuDataService
   ) { }
