@@ -298,6 +298,20 @@ export class ApiService {
     });
   }
 
+  deleteBudget(data: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getToken().then((val: any) => {
+        this.http.post(`${this.url}/expense/del-budget`, data, { headers: this.addHeader(val), observe: 'response' })
+        .subscribe((res) => {
+          resolve(res.body);
+        }, (err) => {
+          this.sessionExpired(err);
+          reject(err);
+        });
+      });
+    });
+  }
+
   editBudget(data: IBudget, id: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.getToken().then((val: any) => {

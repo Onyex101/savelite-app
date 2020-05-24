@@ -69,7 +69,7 @@ export class HomePage implements OnInit {
       console.log(res);
       if (res.length > 0) {
         if (Id === true) {
-           res.forEach((item: any) => {
+          res.forEach((item: any) => {
             if (this.storageId === item._id) {
               this.b = item;
             }
@@ -304,4 +304,30 @@ export class HomePage implements OnInit {
     }
   }
 
+  async deleteBudget() {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: 'Are you sure you want to delete the current budget?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {}
+        }, {
+          text: 'Proceed',
+          handler: async () => {
+            try {
+              await this.apiService.deleteBudget({id: this.b._id});
+              await this.getBudgets();
+            } catch (e) {
+              console.log('error during deletion', e);
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 }

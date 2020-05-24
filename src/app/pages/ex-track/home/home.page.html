@@ -5,8 +5,8 @@
     </ion-buttons>
     <ion-title>Home</ion-title>
     <ion-buttons slot="end">
-      <ion-button shape="round" (click)="newBudget()">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
+      <ion-button shape="round" routerLink="/s-menu/s-menu/settings">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -20,6 +20,22 @@
     <ion-spinner color="primary"></ion-spinner>
   </div>
   <div *ngIf="!spinner">
+
+    <!-- fab placed to the top end -->
+    <ion-fab horizontal="end" vertical="top">
+      <ion-fab-button color="light">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list>
+        <ion-fab-button color="light" (click)="newBudget()">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="light" (click)="deleteBudget()">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+
     <ion-grid>
       <ion-row>
         <ion-col size="9">

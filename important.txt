@@ -26,3 +26,5 @@ https://www.joshmorony.com/building-a-notepad-application-from-scratch-with-ioni
 https://levelup.gitconnected.com/angular-ngrx-a-clean-and-clear-introduction-4ed61c89c1fc
 
 https://dzone.com/articles/angular-app-state-management-with-ngrx
+
+https://edupala.com/ionic-photo-upload-in-firebase/
