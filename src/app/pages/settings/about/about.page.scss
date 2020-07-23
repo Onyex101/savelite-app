@@ -33,4 +33,33 @@ ion-content {
             height: 80px;
         }
     }
+
+    .box {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .container2 {
+            display: flex;
+            width: 60%;
+            flex-direction: column;
+            padding: 8px;
+            border-radius: 4px;
+            align-items: center;
+            --background: #f4f5f8;
+            box-shadow: 8px 8px 16px #cfd0d3,
+                -8px -8px 16px #ffffff;
+            h3 {
+                font-size: 1.2rem;
+            }
+            p {
+                font-size: 1.0rem;
+            }
+            img {
+                width: 80px;
+                height: 80px;
+                border-radius: 8px;
+            }
+        }
+    }
 }

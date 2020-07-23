@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PasswordValidator, PhoneValidator, CountryPhone, ErrorMessages } from './../validation';
-import { ActionSheetController, LoadingController } from '@ionic/angular';
+import { ActionSheetController, LoadingController, AlertController } from '@ionic/angular';
 import { Camera, PictureSourceType } from '@ionic-native/camera/ngx';
 import { AuthService } from './../../services/auth/auth.service';
 import { ApiService } from './../../services/api/api.service';
@@ -33,7 +33,8 @@ export class RegisterPage implements OnInit {
     public loadingController: LoadingController,
     private camera: Camera,
     private auth: AuthService,
-    private api: ApiService
+    private api: ApiService,
+    public alertController: AlertController
   ) {
     this.selectedImage = 'assets/images/avatar.svg';
   }
@@ -128,12 +129,12 @@ export class RegisterPage implements OnInit {
 
   uploadImage(image: string) {
     this.api.sendToImgur(image).then((res: any) => {
-      console.log(res);
+      // console.log(res);
       this.profileImage = res.link;
       this.imgDelHash = res.deletehash;
       this.imageSet = true;
     }).catch((e) => {
-      console.log(e);
+      // console.log(e);
     });
   }
 
@@ -147,15 +148,25 @@ export class RegisterPage implements OnInit {
       values.profileImage = this.profileImage;
       values.imgDelHash = this.imgDelHash;
     }
-    console.log('register form', values);
+    // console.log('register form', values);
     this.auth.register(values).then((res) => {
-      console.log(res);
+      // console.log(res);
       this.regForm.reset();
       loading.dismiss();
       this.router.navigateByUrl('/login');
     }).catch((e) => {
-      console.log(e);
+      // console.log(e);
       loading.dismiss();
     });
+  }
+
+  async presentAlert(message) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }
