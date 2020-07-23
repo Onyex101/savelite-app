@@ -28,3 +28,4 @@ https://levelup.gitconnected.com/angular-ngrx-a-clean-and-clear-introduction-4ed
 https://dzone.com/articles/angular-app-state-management-with-ngrx
 
 https://edupala.com/ionic-photo-upload-in-firebase/
+
