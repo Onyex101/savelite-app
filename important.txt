@@ -29,3 +29,5 @@ https://dzone.com/articles/angular-app-state-management-with-ngrx
 
 https://edupala.com/ionic-photo-upload-in-firebase/
 
+documentation savelite
+https://onyex101.github.io/savelite-app/
